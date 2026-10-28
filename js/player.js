@@ -1,91 +1,87 @@
-class Player {
-    constructor() {
-        this.reset();
+/* Personagem e renderização 2D. Não precisa de sprites ou bibliotecas externas. */
+(function(){
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+  class RunnerPlayer {
+    constructor(){
+      this.lane = 1;
+      this.visualLane = 1;
+      this.jumpLeft = 0;
+      this.runTime = 0;
+      this.hitFlash = 0;
+      this.lives = 3;
     }
-
-    reset() {
-        this.lane = 0; // -1 (Esquerda), 0 (Centro), 1 (Direita)
-        this.y = 0; // Altura do pulo
-        this.z = 100; // Posição fixa no eixo Z (pseudo 3D)
-        this.vy = 0;
-        this.isJumping = false;
-        this.isDucking = false;
-        this.health = 3;
-        this.targetLane = 0;
-        this.laneSwitchTimer = 0;
-        this.emoji = '👾';
-        this.isHit = false;
-        this.hitTimer = 0;
+    reset(){ this.lane = 1; this.visualLane = 1; this.jumpLeft = 0; this.runTime = 0; this.hitFlash = 0; this.lives = 3; }
+    move(direction){ this.lane = clamp(this.lane + direction, 0, 2); }
+    jump(){ if(this.jumpLeft <= 0) this.jumpLeft = 0.72; }
+    isJumping(){ return this.jumpLeft > 0.13; }
+    hit(){ this.hitFlash = 0.55; }
+    update(dt){
+      this.visualLane += (this.lane - this.visualLane) * Math.min(1, dt * 12);
+      this.runTime += dt * (this.isJumping() ? 3 : 8);
+      this.jumpLeft = Math.max(0, this.jumpLeft - dt);
+      this.hitFlash = Math.max(0, this.hitFlash - dt);
     }
-
-    update(dt) {
-        // Troca de faixa suave
-        if (input.keys.left && this.laneSwitchTimer <= 0 && this.targetLane > -1) {
-            this.targetLane--;
-            this.laneSwitchTimer = 15; // frames de cooldown
-        }
-        if (input.keys.right && this.laneSwitchTimer <= 0 && this.targetLane < 1) {
-            this.targetLane++;
-            this.laneSwitchTimer = 15;
-        }
-        if (this.laneSwitchTimer > 0) this.laneSwitchTimer--;
-        
-        // Movimento suave para a faixa
-        this.lane += (this.targetLane - this.lane) * 0.2;
-
-        // Pulo
-        if (input.keys.up && !this.isJumping) {
-            this.isJumping = true;
-            this.vy = 12;
-            audio.playJump();
-        }
-        
-        // Abaixar (Ducking)
-        if (input.keys.down && !this.isJumping) {
-            this.isDucking = true;
-        } else {
-            this.isDucking = false;
-        }
-
-        if (this.isJumping) {
-            this.y += this.vy;
-            this.vy -= 0.8; // Gravidade
-            if (this.y <= 0) {
-                this.y = 0;
-                this.isJumping = false;
-                this.vy = 0;
-            }
-        }
-
-        // Piscar se foi atingido
-        if (this.isHit) {
-            this.hitTimer--;
-            if (this.hitTimer <= 0) this.isHit = false;
-        }
+    draw(ctx, laneX, groundY){
+      const cx = laneX(this.visualLane, 0.94);
+      const jumpProgress = this.jumpLeft > 0 ? Math.sin((0.72 - this.jumpLeft) / 0.72 * Math.PI) : 0;
+      const lift = jumpProgress * 100;
+      const y = groundY - lift;
+      const run = Math.sin(this.runTime);
+      ctx.save();
+      ctx.translate(cx, y);
+      if(this.hitFlash > 0 && Math.floor(this.hitFlash * 20) % 2 === 0) ctx.globalAlpha = 0.5;
+      // Sombra elíptica
+      ctx.fillStyle = `rgba(6,12,32,${0.27 - jumpProgress * 0.13})`;
+      ctx.beginPath(); ctx.ellipse(0, lift * 0.55 + 15, 33 - jumpProgress * 9, 9 - jumpProgress * 2, 0, 0, Math.PI*2); ctx.fill();
+      // Pernas em movimento
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#35427b'; ctx.lineWidth = 13;
+      ctx.beginPath(); ctx.moveTo(-10, -27); ctx.lineTo(-15 + run*8, -5); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(10, -27); ctx.lineTo(15 - run*8, -5); ctx.stroke();
+      ctx.strokeStyle = '#eef1ff'; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(-10, -27); ctx.lineTo(-15 + run*8, -5); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(10, -27); ctx.lineTo(15 - run*8, -5); ctx.stroke();
+      // Pés
+      ctx.fillStyle = '#ffcf70';
+      ctx.beginPath(); ctx.ellipse(-17 + run*8, -4, 13, 6, -0.15, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(17 - run*8, -4, 13, 6, 0.15, 0, Math.PI*2); ctx.fill();
+      // Braços
+      ctx.strokeStyle = '#43aaa9'; ctx.lineWidth = 11;
+      ctx.beginPath(); ctx.moveTo(-20, -61); ctx.lineTo(-30 - run*7, -41); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(20, -61); ctx.lineTo(30 + run*7, -45); ctx.stroke();
+      ctx.strokeStyle = '#e0fff4'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(-20, -61); ctx.lineTo(-30 - run*7, -41); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(20, -61); ctx.lineTo(30 + run*7, -45); ctx.stroke();
+      // Corpo
+      const bodyGrad = ctx.createLinearGradient(-23,-76,22,-24);
+      bodyGrad.addColorStop(0,'#b6a7ff'); bodyGrad.addColorStop(1,'#7966e9');
+      ctx.fillStyle = bodyGrad; ctx.strokeStyle = '#e5e5ff'; ctx.lineWidth = 3;
+      roundedRect(ctx,-22,-77,44,54,14); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fff0a9'; ctx.font = 'bold 17px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('✦',0,-51);
+      // Cabeça
+      ctx.fillStyle = '#62d6c8'; ctx.strokeStyle = '#e4fff6'; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.ellipse(0,-91,30,29,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#26345b';
+      ctx.beginPath(); ctx.ellipse(-10,-92,3.5,6,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(10,-92,3.5,6,0,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = '#26345b'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(0,-85,7,0.15,Math.PI-0.15); ctx.stroke();
+      ctx.fillStyle = '#ff9eac'; ctx.beginPath(); ctx.ellipse(-18,-83,4.5,2.7,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(18,-83,4.5,2.7,0,0,Math.PI*2); ctx.fill();
+      // Antena e brilho
+      ctx.strokeStyle = '#a8fff1'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(0,-119); ctx.lineTo(0,-129); ctx.stroke();
+      ctx.fillStyle = '#ffe08c'; ctx.shadowColor = '#ffe08c'; ctx.shadowBlur = 12;
+      ctx.beginPath(); ctx.arc(0,-132,5,0,Math.PI*2); ctx.fill(); ctx.shadowBlur = 0;
+      ctx.restore();
     }
+  }
 
-    draw(ctx, width, height) {
-        if (this.isHit && this.hitTimer % 4 < 2) return; // Efeito de piscar (invulnerabilidade)
+  function roundedRect(ctx,x,y,w,h,r){
+    const radius = Math.min(r,w/2,h/2);
+    ctx.beginPath(); ctx.moveTo(x+radius,y); ctx.arcTo(x+w,y,x+w,y+h,radius); ctx.arcTo(x+w,y+h,x,y+h,radius); ctx.arcTo(x,y+h,x,y,radius); ctx.arcTo(x,y,x+w,y,radius); ctx.closePath();
+  }
 
-        // Projeção 3D simples
-        const scale = 300 / this.z;
-        const x3d = this.lane * 150;
-        const y3d = 50 + this.y * 2; // Altura do pulo afeta o Y
-        
-        const screenX = width / 2 + x3d * scale;
-        const screenY = (height / 2 + 150) - y3d * scale;
-        
-        ctx.font = `${this.isDucking ? 40 * scale : 60 * scale}px Arial`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "bottom";
-        
-        // Sombra
-        ctx.fillStyle = "rgba(0,0,0,0.3)";
-        ctx.beginPath();
-        ctx.ellipse(width/2 + x3d*scale, height/2 + 150 - 50*scale, 30*scale, 10*scale, 0, 0, Math.PI*2);
-        ctx.fill();
-
-        // Personagem
-        ctx.fillText(this.emoji, screenX, screenY);
-    }
-}
+  window.RunnerPlayer = RunnerPlayer;
+  window.GameDrawUtils = { roundedRect };
+})();

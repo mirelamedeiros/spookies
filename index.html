@@ -1,101 +1,142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPOOKIES: Missão Noturna</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111b3b">
+  <meta name="description" content="Mundos em Corrida: uma aventura de corrida infinita com desafios educativos.">
+  <title>Mundos em Corrida</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Mundos em Corrida - início">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span><strong>MUNDOS</strong><small>EM CORRIDA</small></span>
+      </a>
+      <div class="topbar-right">
+        <div class="mini-stat"><span class="stat-icon">💎</span><strong id="top-crystals">0</strong></div>
+        <button class="icon-button" id="sound-quick" type="button" aria-label="Ativar ou desativar sons" title="Som">🔊</button>
+        <button class="icon-button" id="settings-open" type="button" aria-label="Abrir configurações" title="Configurações">⚙</button>
+      </div>
+    </header>
 
-    <div id="game-container">
-        
-        <!-- TELA 1: MENU INICIAL -->
-        <div id="screen-menu" class="screen active border-blue">
-            <h1 class="title">SPOOKIES</h1>
-            <h2 class="subtitle">O RESGATE DAS ESTRELAS!</h2>
-            
-            <div class="menu-options">
-                <button id="btn-play" class="btn btn-green selected">▶ JOGAR</button>
-                <button id="btn-controls" class="btn btn-gray">🎮 CONTROLES</button>
-            </div>
-
-            <div class="footer-hint">USE SETAS (↑/↓) PARA NAVEGAR E ENTER PARA SELECIONAR</div>
+    <main>
+      <section class="screen screen-home active" id="home-screen" aria-labelledby="home-title">
+        <div class="home-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> UMA AVENTURA PARA APRENDER JOGANDO</div>
+          <h1 id="home-title">Corra por novos<br><span>mundos!</span></h1>
+          <p>Desvie, colete cristais e resolva desafios para restaurar o Portal do Conhecimento.</p>
+          <div class="home-actions">
+            <button class="primary-button" id="play-button" type="button">Jogar agora <span aria-hidden="true">➜</span></button>
+            <button class="secondary-button" id="levels-button" type="button">Escolher mundo</button>
+          </div>
+          <div class="home-facts">
+            <div><span class="fact-icon">🏃</span><span><strong>6 mundos</strong><small>para explorar</small></span></div>
+            <div><span class="fact-icon">🧠</span><span><strong>Desafios</strong><small>que ensinam</small></span></div>
+            <div><span class="fact-icon">💎</span><span><strong>Recompensas</strong><small>a cada conquista</small></span></div>
+          </div>
         </div>
-
-        <!-- TELA 2: NICKNAME -->
-        <div id="screen-name" class="screen border-purple">
-            <h1 class="title-small">SPOOKIES</h1>
-            <p>Escolha o seu Nickname no Joystick:</p>
-            
-            <div class="name-display">
-                <span id="player-name">_</span>
-            </div>
-
-            <div id="keyboard" class="keyboard-grid">
-                <!-- Teclado gerado via JS -->
-            </div>
-            <div class="footer-hint">USE SETAS PARA NAVEGAR E ENTER PARA DIGITAR</div>
+        <div class="home-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="floating-crystal crystal-one">◆</div><div class="floating-crystal crystal-two">✦</div>
+          <div class="home-planet"><div class="planet-ring"></div><div class="planet-land land-one"></div><div class="planet-land land-two"></div></div>
+          <div class="hero-kiko"><div class="kiko-glow"></div><div class="kiko-antenna"></div><div class="kiko-head"><span class="kiko-eye eye-left"></span><span class="kiko-eye eye-right"></span><span class="kiko-smile"></span><span class="kiko-cheek cheek-left"></span><span class="kiko-cheek cheek-right"></span></div><div class="kiko-body"><span class="kiko-badge">✦</span></div><div class="kiko-arm arm-left"></div><div class="kiko-arm arm-right"></div><div class="kiko-leg leg-left"></div><div class="kiko-leg leg-right"></div></div>
+          <div class="art-label label-top"><span>✦</span> CURIOSIDADE</div><div class="art-label label-bottom"><span>↗</span> PRÓXIMA PARADA: AVENTURA!</div>
         </div>
+        <div class="home-bottom"><span>✧ FEITO PARA DESCOBRIR</span><span>Use as setas ou WASD para jogar</span></div>
+      </section>
 
-        <!-- TELA 3: JOGO (CORRIDA) -->
-        <div id="screen-game" class="screen border-game">
-            <div id="hud">
-                <span>JOGADOR: <span id="hud-name">AAA</span></span>
-                <span>PONTOS: <span id="hud-score">0</span></span>
-                <span>VIDAS: <span id="hud-lives">❤️❤️❤️</span></span>
-            </div>
-            
-            <!-- A corrida acontece aqui usando elementos DOM simples -->
-            <div id="track">
-                <div class="lane" id="lane-0"></div>
-                <div class="lane" id="lane-1"></div>
-                <div class="lane" id="lane-2"></div>
-                <div id="player">👾</div>
-            </div>
+      <section class="screen level-screen" id="levels-screen" aria-labelledby="levels-title" hidden>
+        <div class="section-heading"><div><div class="eyebrow">ESCOLHA SUA AVENTURA</div><h2 id="levels-title">Selecione um mundo</h2><p>Conclua uma fase para desbloquear a próxima.</p></div><button class="text-button" id="levels-back" type="button">← Voltar</button></div>
+        <div class="level-grid" id="level-grid"></div>
+      </section>
 
-            <!-- Overlay de Pergunta -->
-            <div id="question-overlay" class="hidden">
-                <div class="question-box">
-                    <h2 id="q-text">Pergunta?</h2>
-                    <div id="q-options" class="q-options-container">
-                        <button class="btn btn-gray q-opt selected">Opção 1</button>
-                        <button class="btn btn-gray q-opt">Opção 2</button>
-                    </div>
-                </div>
-            </div>
+      <section class="screen game-screen" id="game-screen" aria-label="Área de jogo" hidden>
+        <div class="game-hud">
+          <div class="hud-world"><button class="icon-button back-game" id="exit-run" type="button" aria-label="Sair da corrida">←</button><div><small id="hud-phase">MUNDO 01</small><strong id="hud-world-name">Floresta Encantada</strong></div></div>
+          <div class="hud-progress"><div class="progress-label"><span>PROGRESSO</span><strong id="progress-label">0%</strong></div><div class="progress-track"><span id="progress-fill"></span></div></div>
+          <div class="hud-score"><span>💎 <strong id="hud-crystals">0</strong></span><span>⭐ <strong id="hud-score">0</strong></span></div>
+          <button class="icon-button" id="pause-button" type="button" aria-label="Pausar jogo">Ⅱ</button>
         </div>
-
-        <!-- TELA 4: GAME OVER / PÓDIO -->
-        <div id="screen-gameover" class="screen border-red">
-            <h1 class="title-red">GAME OVER</h1>
-            <h3 class="subtitle-white">JOGADOR: <span id="go-name">AAA</span> | PONTUAÇÃO FINAL: <span id="go-score">0</span> PTS</h3>
-            <h4 class="podium-title">🏆 PÓDIO 🏆</h4>
-
-            <div class="podium-container">
-                <div class="podium-place place-2">
-                    <span class="podium-name">CPU1</span>
-                    <div class="block block-silver">2º</div>
-                </div>
-                <div class="podium-place place-1">
-                    <span class="podium-name" id="podium-1-name">AAA</span>
-                    <span class="podium-pts" id="podium-1-pts">0 pts</span>
-                    <div class="block block-gold">1º</div>
-                </div>
-                <div class="podium-place place-3">
-                    <span class="podium-name">CPU2</span>
-                    <div class="block block-bronze">3º</div>
-                </div>
-            </div>
-
-            <div class="menu-options row">
-                <button id="btn-replay" class="btn btn-green selected">▶ JOGAR NOVAMENTE</button>
-                <button id="btn-home" class="btn btn-gray">🏠 MENU INICIAL</button>
-            </div>
+        <div class="game-stage">
+          <canvas id="game-canvas" width="1000" height="560" aria-label="Corrida de Kiko. Use as setas para mudar de faixa e espaço para pular."></canvas>
+          <div class="stage-tip" id="stage-tip"><span>⌨</span> ← → mover · Espaço pular · P pausar</div>
+          <div class="stage-notice" id="stage-notice" role="status" aria-live="polite"></div>
+          <div class="touch-controls" aria-label="Controles de toque">
+            <div class="touch-move"><button type="button" data-action="left" aria-label="Mover para esquerda">◀</button><button type="button" data-action="right" aria-label="Mover para direita">▶</button></div>
+            <button type="button" class="touch-jump" data-action="jump" aria-label="Pular">⬆ PULAR</button>
+          </div>
         </div>
+        <div class="game-footer"><span><i class="live-dot"></i> AVENTURA EM ANDAMENTO</span><span id="objective-text">Colete cristais e encontre o portal!</span></div>
+      </section>
 
+      <section class="screen completion-screen" id="completion-screen" hidden aria-labelledby="completion-title">
+        <div class="completion-sparkle sparkle-a">✦</div><div class="completion-sparkle sparkle-b">✧</div>
+        <div class="completion-emblem">🏆</div><div class="eyebrow">MISSÃO CUMPRIDA</div>
+        <h2 id="completion-title">PARABÉNS!</h2>
+        <p id="completion-message">Você completou a aventura e restaurou o Portal do Conhecimento!</p>
+        <div class="completion-stats"><div><strong id="final-score">0</strong><span>PONTOS</span></div><div><strong id="final-crystals">0</strong><span>CRISTAIS</span></div><div><strong id="final-levels">0/6</strong><span>MUNDOS</span></div></div>
+        <div class="completion-actions"><button class="primary-button" id="play-again" type="button">Jogar novamente ↻</button><button class="secondary-button" id="completion-levels" type="button">Ver mundos</button></div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="question-modal" hidden>
+      <section class="modal-card question-card" role="dialog" aria-modal="true" aria-labelledby="question-title">
+        <div class="modal-topline"><span class="challenge-chip">✦ PAUSA PARA PENSAR</span><button class="icon-button modal-close" id="question-close" type="button" aria-label="Fechar desafio e continuar">×</button></div>
+        <div class="question-progress"><span id="question-world">DESAFIO DO MUNDO</span><span id="question-count">DESAFIO 1</span></div>
+        <div class="question-mascot" aria-hidden="true">💡</div>
+        <h2 id="question-title">Uma pergunta apareceu!</h2>
+        <p class="question-prompt" id="question-prompt"></p>
+        <div id="question-visual" class="question-visual" hidden></div>
+        <div id="question-options" class="answer-grid"></div>
+        <div id="drag-area" class="drag-area" hidden></div>
+        <p class="answer-feedback" id="answer-feedback" role="status" aria-live="polite"></p>
+        <div class="question-bottom"><span>🧠 Aprender também faz parte da corrida</span><button id="continue-button" class="primary-button" type="button" hidden>Continuar corrida →</button></div>
+      </section>
     </div>
 
-    <script src="main.js"></script>
+    <div class="modal-backdrop" id="pause-modal" hidden>
+      <section class="modal-card compact-modal" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+        <div class="pause-symbol">Ⅱ</div><div class="eyebrow">TEMPO PARA RESPIRAR</div><h2 id="pause-title">Corrida pausada</h2><p>Seu progresso está guardado nesta partida.</p>
+        <button class="primary-button full-button" id="resume-button" type="button">Continuar correndo ▶</button><button class="secondary-button full-button" id="pause-restart" type="button">Recomeçar mundo ↻</button><button class="text-button" id="pause-exit" type="button">Voltar aos mundos</button>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="gameover-modal" hidden>
+      <section class="modal-card compact-modal" role="dialog" aria-modal="true" aria-labelledby="gameover-title">
+        <div class="pause-symbol">↻</div><div class="eyebrow">A AVENTURA CONTINUA</div><h2 id="gameover-title">Vamos tentar de novo?</h2><p>Kiko precisa de mais uma tentativa. Você mantém os cristais já coletados.</p>
+        <button class="primary-button full-button" id="gameover-retry" type="button">Tentar novamente ↻</button><button class="secondary-button full-button" id="gameover-levels" type="button">Voltar aos mundos</button>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="reward-modal" hidden>
+      <section class="modal-card compact-modal reward-modal" role="dialog" aria-modal="true" aria-labelledby="reward-title">
+        <div class="reward-illustration" id="reward-illustration">💎</div><div class="eyebrow">NOVO MUNDO CONCLUÍDO</div><h2 id="reward-title">Muito bem!</h2><p id="reward-message">Você ganhou uma recompensa.</p><div class="reward-points" id="reward-points">+100 pontos · +1 estrela</div>
+        <button class="primary-button full-button" id="reward-continue" type="button">Próximo mundo →</button><button class="secondary-button full-button" id="reward-levels" type="button">Escolher mundo</button>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="settings-modal" hidden>
+      <section class="modal-card settings-card" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="modal-topline"><div class="eyebrow">PERSONALIZE SUA AVENTURA</div><button class="icon-button modal-close" id="settings-close" type="button" aria-label="Fechar configurações">×</button></div>
+        <h2 id="settings-title">Configurações</h2>
+        <label class="setting-row"><span><strong>Música</strong><small>Melodia ambiente</small></span><input id="music-toggle" type="checkbox" checked><i class="toggle-ui"></i></label>
+        <label class="setting-row"><span><strong>Efeitos sonoros</strong><small>Coletas e respostas</small></span><input id="effects-toggle" type="checkbox" checked><i class="toggle-ui"></i></label>
+        <label class="setting-row"><span><strong>Narração</strong><small>Ler os desafios em voz alta</small></span><input id="narration-toggle" type="checkbox"><i class="toggle-ui"></i></label>
+        <label class="volume-setting" for="volume-control"><span><strong>Volume</strong><output id="volume-value">50%</output></span><input id="volume-control" type="range" min="0" max="100" value="50"></label>
+        <p class="settings-note">Dica: você também pode usar teclado, mouse ou os controles na tela. Pressione P ou Esc para pausar durante a corrida.</p>
+        <button class="primary-button full-button" id="settings-done" type="button">Pronto!</button>
+      </section>
+    </div>
+
+    <div class="sr-only" id="live-announcer" aria-live="polite" aria-atomic="true"></div>
+    <footer class="site-footer"><span>✦ MUNDOS EM CORRIDA</span><span>Uma aventura de aprender, explorar e descobrir.</span></footer>
+  </div>
+  <script src="js/levels.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/game.js"></script>
 </body>
 </html>

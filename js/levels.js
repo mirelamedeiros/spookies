@@ -1,56 +1,9 @@
-const levels = [
-    {
-        id: 1,
-        name: "Floresta dos Doces",
-        bgColor: "#87CEEB",
-        groundColor: "#228B22",
-        speed: 15,
-        obstacles: ['🌳', '🍄', '🪨'],
-        collectibles: ['🍬', '⭐']
-    },
-    {
-        id: 2,
-        name: "Cidade dos Monstrinhos",
-        bgColor: "#4682B4",
-        groundColor: "#555555",
-        speed: 18,
-        obstacles: ['🏢', '🚗', '🛑'],
-        collectibles: ['🍬', '⭐']
-    },
-    {
-        id: 3,
-        name: "Praia das Estrelas",
-        bgColor: "#00BFFF",
-        groundColor: "#F4A460",
-        speed: 20,
-        obstacles: ['🌴', '🦀', '⛱️'],
-        collectibles: ['🍬', '⭐']
-    },
-    {
-        id: 4,
-        name: "Montanha dos Amigos",
-        bgColor: "#B0C4DE",
-        groundColor: "#8B4513",
-        speed: 22,
-        obstacles: ['⛰️', '🌲', '🪨'],
-        collectibles: ['🍬', '⭐']
-    },
-    {
-        id: 5,
-        name: "Espaço dos Monstrinhos",
-        bgColor: "#000033",
-        groundColor: "#4B0082",
-        speed: 25,
-        obstacles: ['🪐', '🛸', '☄️'],
-        collectibles: ['🍬', '⭐']
-    },
-    {
-        id: 6,
-        name: "Estrela Final",
-        bgColor: "#483D8B",
-        groundColor: "#9370DB",
-        speed: 28,
-        obstacles: ['🔮', '✨', '🗿'],
-        collectibles: ['🍬', '⭐']
-    }
+/* Definições dos seis mundos. Edite este arquivo para personalizar a progressão. */
+window.GAME_LEVELS = [
+  { id: 1, name: 'Floresta Encantada', short: 'Floresta', subtitle: 'Um caminho cheio de vida e magia.', icon: '🌳', accent: '#74e6bd', skyTop: '#253e79', skyBottom: '#7cc8d7', far: '#527aa0', near: '#34766c', road: '#263954', lane: '#c9f8dc', obstacle: ['🍄','🪵','🌿'], scenery: 'forest', topics: 'Cores, formas e contagem', goal: 1650, speed: 1.0, reward: 'Broche da Floresta' },
+  { id: 2, name: 'Cidade das Ideias', short: 'Cidade', subtitle: 'Entre prédios, placas e invenções.', icon: '🏙️', accent: '#ffc77b', skyTop: '#2b4d85', skyBottom: '#d69ba9', far: '#7184a9', near: '#4d587d', road: '#343a54', lane: '#ffe5b2', obstacle: ['🚧','📦','🛴'], scenery: 'city', goal: 1780, speed: 1.08, reward: 'Tênis Relâmpago' },
+  { id: 3, name: 'Ilha das Descobertas', short: 'Ilha', subtitle: 'Areia, conchas e mares brilhantes.', icon: '🏝️', accent: '#64e4e8', skyTop: '#2a84bd', skyBottom: '#a3e4e4', far: '#4fabb4', near: '#4b9d90', road: '#c59d70', lane: '#fff0bf', obstacle: ['🐚','🪨','🪸'], scenery: 'beach', goal: 1900, speed: 1.14, reward: 'Concha Cantante' },
+  { id: 4, name: 'Montanhas da Lógica', short: 'Montanhas', subtitle: 'Suba, observe e descubra padrões.', icon: '🏔️', accent: '#b6caff', skyTop: '#385f9d', skyBottom: '#b4c9de', far: '#7e9eb8', near: '#547c85', road: '#4d5868', lane: '#e1f0ff', obstacle: ['🪨','🌲','🧊'], scenery: 'mountain', goal: 2020, speed: 1.2, reward: 'Cachecol das Nuvens' },
+  { id: 5, name: 'Galáxia dos Números', short: 'Galáxia', subtitle: 'Atravesse estrelas e planetas curiosos.', icon: '🪐', accent: '#d6a7ff', skyTop: '#171c50', skyBottom: '#5e4e96', far: '#484476', near: '#34375e', road: '#252744', lane: '#e1d2ff', obstacle: ['☄️','🪐','🛰️'], scenery: 'space', goal: 2140, speed: 1.27, reward: 'Capacete Estelar' },
+  { id: 6, name: 'Portal do Conhecimento', short: 'Portal', subtitle: 'O grande desafio para restaurar os mundos.', icon: '🌈', accent: '#ffdb8a', skyTop: '#493579', skyBottom: '#d18bb8', far: '#8875b4', near: '#65518c', road: '#3a315c', lane: '#ffe8b5', obstacle: ['🔮','⚡','🌀'], scenery: 'portal', goal: 2300, speed: 1.34, reward: 'Cristal do Conhecimento' }
 ];

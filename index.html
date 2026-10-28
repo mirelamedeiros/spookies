@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPOOKIES: Missão Noturna</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="game-container">
+        
+        <!-- TELA 1: MENU INICIAL -->
+        <div id="screen-menu" class="screen active border-blue">
+            <h1 class="title">SPOOKIES</h1>
+            <h2 class="subtitle">O RESGATE DAS ESTRELAS!</h2>
+            
+            <div class="menu-options">
+                <button id="btn-play" class="btn btn-green selected">▶ JOGAR</button>
+                <button id="btn-controls" class="btn btn-gray">🎮 CONTROLES</button>
+            </div>
+
+            <div class="footer-hint">USE SETAS (↑/↓) PARA NAVEGAR E ENTER PARA SELECIONAR</div>
+        </div>
+
+        <!-- TELA 2: NICKNAME -->
+        <div id="screen-name" class="screen border-purple">
+            <h1 class="title-small">SPOOKIES</h1>
+            <p>Escolha o seu Nickname no Joystick:</p>
+            
+            <div class="name-display">
+                <span id="player-name">_</span>
+            </div>
+
+            <div id="keyboard" class="keyboard-grid">
+                <!-- Teclado gerado via JS -->
+            </div>
+            <div class="footer-hint">USE SETAS PARA NAVEGAR E ENTER PARA DIGITAR</div>
+        </div>
+
+        <!-- TELA 3: JOGO (CORRIDA) -->
+        <div id="screen-game" class="screen border-game">
+            <div id="hud">
+                <span>JOGADOR: <span id="hud-name">AAA</span></span>
+                <span>PONTOS: <span id="hud-score">0</span></span>
+                <span>VIDAS: <span id="hud-lives">❤️❤️❤️</span></span>
+            </div>
+            
+            <!-- A corrida acontece aqui usando elementos DOM simples -->
+            <div id="track">
+                <div class="lane" id="lane-0"></div>
+                <div class="lane" id="lane-1"></div>
+                <div class="lane" id="lane-2"></div>
+                <div id="player">👾</div>
+            </div>
+
+            <!-- Overlay de Pergunta -->
+            <div id="question-overlay" class="hidden">
+                <div class="question-box">
+                    <h2 id="q-text">Pergunta?</h2>
+                    <div id="q-options" class="q-options-container">
+                        <button class="btn btn-gray q-opt selected">Opção 1</button>
+                        <button class="btn btn-gray q-opt">Opção 2</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA 4: GAME OVER / PÓDIO -->
+        <div id="screen-gameover" class="screen border-red">
+            <h1 class="title-red">GAME OVER</h1>
+            <h3 class="subtitle-white">JOGADOR: <span id="go-name">AAA</span> | PONTUAÇÃO FINAL: <span id="go-score">0</span> PTS</h3>
+            <h4 class="podium-title">🏆 PÓDIO 🏆</h4>
+
+            <div class="podium-container">
+                <div class="podium-place place-2">
+                    <span class="podium-name">CPU1</span>
+                    <div class="block block-silver">2º</div>
+                </div>
+                <div class="podium-place place-1">
+                    <span class="podium-name" id="podium-1-name">AAA</span>
+                    <span class="podium-pts" id="podium-1-pts">0 pts</span>
+                    <div class="block block-gold">1º</div>
+                </div>
+                <div class="podium-place place-3">
+                    <span class="podium-name">CPU2</span>
+                    <div class="block block-bronze">3º</div>
+                </div>
+            </div>
+
+            <div class="menu-options row">
+                <button id="btn-replay" class="btn btn-green selected">▶ JOGAR NOVAMENTE</button>
+                <button id="btn-home" class="btn btn-gray">🏠 MENU INICIAL</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -10,7 +10,7 @@
   const player = new window.RunnerPlayer();
   const screenIds = ['home-screen', 'levels-screen', 'game-screen', 'completion-screen'];
   const modalIds = ['question-modal', 'pause-modal', 'reward-modal', 'gameover-modal', 'settings-modal'];
-  const questionCheckpoints = [0.22, 0.52, 0.79];
+  const challengeSpawnPoints = [0.17, 0.44, 0.71];
   const SAVE_KEY = 'mundos-em-corrida-save-v1';
   const SETTINGS_KEY = 'mundos-em-corrida-settings-v1';
 
@@ -35,7 +35,7 @@
     obstacleTimer: 1.05,
     crystalTimer: 0.35,
     lastObstacleLane: 1,
-    checkpointIndex: 0,
+    challengeSpawnIndex: 0,
     questionNo: 0,
     questionQueue: [],
     currentQuestion: null,
@@ -45,6 +45,7 @@
     selectedDragSlot: 0,
     dragValue: null,
     noticeTimer: 0,
+    pickupTimer: 0,
     runTime: 0,
     previousTime: 0,
     audio: null,
@@ -136,7 +137,7 @@
     const level = currentLevel();
     game.distance = 0; game.phaseScore = 0; game.phaseCrystals = 0; game.correctAnswers = 0;
     game.objects = []; game.obstacleTimer = 0.9; game.crystalTimer = 0.55; game.lastObstacleLane = 1;
-    game.checkpointIndex = 0; game.questionNo = 0; game.questionQueue = shuffled(questionBank[level.id] || []);
+    game.challengeSpawnIndex = 0; game.questionNo = 0; game.questionQueue = shuffled(questionBank[level.id] || []);
     game.currentQuestion = null; game.questionAnswered = false; game.dragPlaced = [];
     if(game.memoryTimer!==null){window.clearTimeout(game.memoryTimer);game.memoryTimer=null;}
     game.runTime = 0; game.noticeTimer = 0; game.lastSaveTime = 0; player.reset(); hideAllModals();
@@ -144,7 +145,7 @@
     $('hud-world-name').textContent = level.name;
     $('hud-crystals').textContent = '0'; $('hud-score').textContent = '0';
     $('progress-fill').style.width = '0%'; $('progress-label').textContent = '0%';
-    $('objective-text').textContent = `Colete cristais e descubra: ${level.topics.toLowerCase()}.`;
+    $('objective-text').textContent = `Pegue as relíquias douradas para liberar desafios sobre ${level.topics.toLowerCase()}.`;
     $('stage-notice').classList.remove('show');
     game.mode = 'running'; showScreen('game-screen'); updateTopStats();
     if(settings.music) startMusic();
@@ -289,15 +290,21 @@
         ctx.fillStyle='#72f5ee';ctx.strokeStyle='#edffff';ctx.lineWidth=2*scale;
         ctx.beginPath();ctx.moveTo(0,-22*scale);ctx.lineTo(16*scale,-5*scale);ctx.lineTo(0,20*scale);ctx.lineTo(-16*scale,-5*scale);ctx.closePath();ctx.fill();ctx.stroke();
         ctx.fillStyle='#ffffff99';ctx.beginPath();ctx.moveTo(0,-22*scale);ctx.lineTo(0,6*scale);ctx.lineTo(-16*scale,-5*scale);ctx.closePath();ctx.fill();ctx.shadowBlur=0;ctx.restore();
+      } else if(object.kind==='challenge'){
+        const boxSize=18+25*depth;
+        ctx.save();ctx.translate(x,y-18*scale);
+        ctx.shadowColor='#ffca56';ctx.shadowBlur=25*depth+5;
+        ctx.fillStyle='#ffcf70';ctx.strokeStyle='#fff4be';ctx.lineWidth=Math.max(1,2.5*depth);
+        window.GameDrawUtils.roundedRect(ctx,-boxSize/2,-boxSize/2,boxSize,boxSize,Math.max(4,5*scale));ctx.fill();ctx.stroke();ctx.shadowBlur=0;
+        ctx.strokeStyle='#9a5628';ctx.lineWidth=Math.max(1,2*depth);ctx.beginPath();ctx.moveTo(-boxSize*.45,0);ctx.lineTo(boxSize*.45,0);ctx.stroke();
+        ctx.fillStyle='#805028';ctx.font=`bold ${Math.max(12,18+12*depth)}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',0,1);
+        if(depth>.47){ctx.fillStyle='#fff8d6';ctx.strokeStyle='#744d20';ctx.lineWidth=3;ctx.font=`900 ${Math.max(10,12+7*depth)}px system-ui`;ctx.strokeText('PEGUE!',0,boxSize*.95+14);ctx.fillText('PEGUE!',0,boxSize*.95+14);}
+        ctx.restore();
       } else {
-        const fontSize=(20+34*depth)*(object.kind==='obstacle'?1:1.2);
+        const fontSize=20+34*depth;
         ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-        if(object.kind==='obstacle'){
-          ctx.globalAlpha=.2;ctx.fillStyle='#081026';ctx.beginPath();ctx.ellipse(x,y+12*scale,17*scale,5*scale,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
-          ctx.font=`${fontSize}px "Apple Color Emoji", "Segoe UI Emoji", sans-serif`;ctx.fillText(object.emoji,x,y-fontSize*.15);
-        } else {
-          ctx.shadowColor='#ffcf70';ctx.shadowBlur=16*depth;ctx.font=`${fontSize}px "Apple Color Emoji", "Segoe UI Emoji", sans-serif`;ctx.fillText(object.emoji,x,y);ctx.shadowBlur=0;
-        }
+        ctx.globalAlpha=.2;ctx.fillStyle='#081026';ctx.beginPath();ctx.ellipse(x,y+12*scale,17*scale,5*scale,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+        ctx.font=`${fontSize}px "Apple Color Emoji", "Segoe UI Emoji", sans-serif`;ctx.fillText(object.emoji,x,y-fontSize*.15);
         ctx.restore();
       }
     }
@@ -334,7 +341,12 @@
     }
     if(kind==='obstacle') game.lastObstacleLane=lane;
     const level=currentLevel();
-    const emoji=kind==='obstacle'?level.obstacle[Math.floor(Math.random()*level.obstacle.length)]:'✨';
+    if(kind==='challenge'){
+      const busyLanes = new Set(game.objects.filter(object=>object.p<.24).map(object=>object.lane));
+      const freeLanes = [0,1,2].filter(candidate=>!busyLanes.has(candidate));
+      if(freeLanes.length) lane=freeLanes[Math.floor(Math.random()*freeLanes.length)];
+    }
+    const emoji=kind==='obstacle'?level.obstacle[Math.floor(Math.random()*level.obstacle.length)]:(kind==='challenge'?'🎁':'✨');
     game.objects.push({kind,lane,p:0,emoji,seed:Math.random()*10});
   }
 
@@ -347,6 +359,13 @@
     game.obstacleTimer -= dt; game.crystalTimer -= dt;
     if(game.obstacleTimer<=0){ spawnObject('obstacle'); game.obstacleTimer=1.03/level.speed + Math.random()*.33; }
     if(game.crystalTimer<=0){ spawnObject('crystal'); game.crystalTimer=.62+Math.random()*.48; }
+    const progress=Math.min(1,game.distance/level.goal);
+    // Relíquias são colocadas na pista em pontos definidos, mas só liberam perguntas se Kiko realmente as coletar.
+    if(game.challengeSpawnIndex<challengeSpawnPoints.length && progress>=challengeSpawnPoints[game.challengeSpawnIndex]){
+      spawnObject('challenge');game.challengeSpawnIndex++;
+      showNotice('Relíquia dourada à frente! Pegue para liberar um desafio.');
+    }
+    $('progress-fill').style.width=`${progress*100}%`;$('progress-label').textContent=`${Math.floor(progress*100)}%`;
     for(let i=game.objects.length-1;i>=0;i--){
       const object=game.objects[i]; object.p += dt * .58 * level.speed;
       if(object.p>=.9){
@@ -355,6 +374,12 @@
             game.phaseCrystals++; game.phaseScore+=25; stats.crystals++; stats.score+=25;
             $('hud-crystals').textContent=game.phaseCrystals; $('hud-score').textContent=game.phaseScore;
             updateTopStats(); soundEffect(920,.09); showNotice('+1 cristal  ·  +25 pontos');
+          } else if(object.kind==='challenge'){
+            game.objects.splice(i,1);
+            game.phaseScore+=50;stats.score+=50;$('hud-score').textContent=game.phaseScore;saveStats();
+            soundEffect(1060,.18);showNotice('RELÍQUIA COLETADA! DESAFIO LIBERADO!');
+            game.mode='pickup';game.pickupTimer=.26;
+            return;
           } else if(object.kind==='obstacle' && !player.isJumping()){
             player.lives--;player.hit();soundEffect(160,.2);showNotice('Ops! Desvie ou pule os obstáculos.');
             if(player.lives<=0){ game.objects.splice(i,1); enterGameOver(); return; }
@@ -363,25 +388,21 @@
         game.objects.splice(i,1);
       }
     }
-    const progress=Math.min(1,game.distance/level.goal);
-    $('progress-fill').style.width=`${progress*100}%`;$('progress-label').textContent=`${Math.floor(progress*100)}%`;
     if(game.noticeTimer>0){game.noticeTimer-=dt;if(game.noticeTimer<=0)$('stage-notice').classList.remove('show');}
-    if(game.checkpointIndex<questionCheckpoints.length && progress>=questionCheckpoints[game.checkpointIndex]){
-      openQuestion(); return;
-    }
     if(game.distance>=level.goal){ completeLevel(); return; }
     if(game.runTime-game.lastSaveTime>8){game.lastSaveTime=game.runTime;saveStats();}
   }
 
   function openQuestion(){
     const q=game.questionQueue[game.questionNo % game.questionQueue.length];
-    if(!q){game.checkpointIndex++;return;}
-    game.questionNo++; game.checkpointIndex++; game.currentQuestion=q;game.questionAnswered=false;game.questionCorrect=false;
+    if(!q){game.mode='running';return;}
+    game.questionNo++; game.currentQuestion=q;game.questionAnswered=false;game.questionCorrect=false;
     // Remove objetos quase no personagem para que a retomada seja segura.
     game.objects=game.objects.filter(object=>object.p<.72);
     game.mode='question';
+    $('stage-notice').classList.remove('show');game.noticeTimer=0;
     $('question-world').textContent=currentLevel().name.toUpperCase();
-    $('question-count').textContent=`DESAFIO ${game.questionNo} DE ${questionCheckpoints.length}`;
+    $('question-count').textContent=`RELÍQUIA COLETADA • DESAFIO ${game.questionNo}`;
     $('question-title').textContent=q.title;
     $('question-prompt').textContent=q.prompt;
     const visual=$('question-visual');
@@ -496,7 +517,7 @@
     if(game.mode==='question') game.mode='running';
     game.currentQuestion=null;
     announce('A corrida continua!');
-    if(game.checkpointIndex>=questionCheckpoints.length) $('objective-text').textContent='Quase lá! Continue desviando e coletando cristais.';
+    $('objective-text').textContent=game.challengeSpawnIndex>=challengeSpawnPoints.length?'Todas as relíquias já apareceram! Continue até o portal.':'Procure a relíquia dourada para liberar o próximo desafio.';
     renderFrame();
   }
 
@@ -582,6 +603,11 @@
   }
 
   function handleAction(action){
+    if(action==='pause'){
+      if(game.mode==='running')pauseGame();
+      else if(game.mode==='paused')resumeGame();
+      return;
+    }
     if(game.mode!=='running')return;
     if(action==='left')player.move(-1);else if(action==='right')player.move(1);else if(action==='jump')player.jump();
     soundEffect(action==='jump'?520:390,.04);
@@ -610,6 +636,17 @@
   $('levels-button').addEventListener('click',goLevels);
   $('levels-back').addEventListener('click',goHome);
   $('settings-open').addEventListener('click',openSettings);
+  $('fullscreen-button').addEventListener('click',async()=>{
+    try{
+      if(!document.fullscreenElement) await document.documentElement.requestFullscreen();
+      else await document.exitFullscreen();
+    }catch{showNotice('A tela cheia não está disponível neste navegador.');}
+  });
+  document.addEventListener('fullscreenchange',()=>{
+    const active=Boolean(document.fullscreenElement);
+    $('fullscreen-button').textContent=active?'⤢':'⛶';
+    $('fullscreen-button').setAttribute('aria-label',active?'Sair da tela cheia':'Ativar tela cheia');
+  });
   $('sound-quick').addEventListener('click',()=>{
     const newValue=!(settings.music||settings.effects);settings.music=newValue;settings.effects=newValue;
     saveSettings();syncAudioSettings();$('sound-quick').textContent=newValue?'🔊':'🔇';
@@ -647,18 +684,34 @@
 
   window.addEventListener('keydown',event=>{
     const key=event.key.toLowerCase();
-    if(['arrowleft','arrowright','arrowup',' ','a','d','w','p','escape'].includes(key))event.preventDefault();
+    if(['arrowleft','arrowright','arrowup',' ','a','d','w','z','x','c','v','p','escape','enter'].includes(key))event.preventDefault();
     if(game.mode==='question'){
       if(key==='escape'){continueQuestion();return;}
-      if(/^[1-4]$/.test(key)&&!game.questionAnswered){const index=Number(key)-1;const button=$('question-options').querySelector(`[data-index="${index}"]`);if(button)button.click();}
+      if(game.currentQuestion?.type==='drag'){
+        if(/^[1-4]$/.test(key)){
+          const slot=$('drag-area').querySelectorAll('.drag-slot')[Number(key)-1];if(slot)slot.click();
+        } else if(['z','x','c','v'].includes(key)&&!game.questionAnswered){
+          const wanted=game.currentQuestion.dragItems['zxcv'.indexOf(key)];const item=Array.from($('drag-area').querySelectorAll('.drag-item')).find(element=>element.dataset.dragValue===wanted);if(item)item.click();
+        } else if(key==='enter'){
+          if(game.questionAnswered)continueQuestion();else $('drag-check')?.click();
+        }
+        return;
+      }
+      const answerKeys={'z':0,'x':1,'c':2,'v':3};
+      if(!game.questionAnswered&&(/^[1-4]$/.test(key)||Object.hasOwn(answerKeys,key))){
+        const index=/^[1-4]$/.test(key)?Number(key)-1:answerKeys[key];
+        const button=$('question-options').querySelector(`[data-index="${index}"]`);if(button)button.click();
+      } else if(key==='enter'&&game.questionAnswered)continueQuestion();
       return;
     }
+    if(game.mode==='home'&&(key==='enter'||key===' '||key==='z')){$('play-button').click();return;}
+    if(game.mode==='levels'&&key==='enter'){$('level-grid').querySelector('.level-card:not(:disabled)')?.click();return;}
     if(game.mode==='running'){
       if(key==='arrowleft'||key==='a')handleAction('left');
       else if(key==='arrowright'||key==='d')handleAction('right');
-      else if(key==='arrowup'||key==='w'||key===' ')handleAction('jump');
-      else if(key==='p'||key==='escape')pauseGame();
-    } else if(game.mode==='paused'&&(key==='p'||key==='escape'))resumeGame();
+      else if(key==='arrowup'||key==='w'||key===' '||key==='z')handleAction('jump');
+      else if(key==='p'||key==='escape'||key==='x')pauseGame();
+    } else if(game.mode==='paused'&&(key==='p'||key==='escape'||key==='enter'||key==='x'))resumeGame();
   });
 
   // Loop de atualização/desenho
@@ -666,6 +719,10 @@
     if(!game.lastFrameTime)game.lastFrameTime=timestamp;
     const dt=Math.min(.045,Math.max(0,(timestamp-game.lastFrameTime)/1000));game.lastFrameTime=timestamp;
     if(game.mode==='running')updateGame(dt);
+    else if(game.mode==='pickup') {
+      game.pickupTimer-=dt;
+      if(game.pickupTimer<=0){openQuestion();}
+    }
     else if(game.mode==='question'){
       // Um leve brilho da cena continua animado sem mover o personagem nem os obstáculos.
       if(!game.reducedMotion)game.runTime+=dt*.25;

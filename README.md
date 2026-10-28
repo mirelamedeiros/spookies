@@ -7,18 +7,27 @@ Jogo educativo de corrida infinita feito com HTML, CSS e JavaScript puro. Não u
 1. Extraia a pasta `mundos-em-corrida`.
 2. Abra a pasta no Visual Studio Code.
 3. Abra `index.html` no navegador. Para desenvolvimento, também pode usar a extensão Live Server no VS Code.
-4. Clique em **Jogar agora**.
+4. Clique em **START • JOGAR** (ou pressione Enter) para começar.
+5. Para uma experiência mais parecida com o fliperama, use o botão **⛶ Tela cheia** no canto superior direito.
 
 O jogo também pode ser executado sem conexão com a internet: as ilustrações e os efeitos sonoros são desenhados ou gerados pelo próprio navegador.
 
-## Controles
+## Controles de fliperama
 
-- **← / A:** mover uma faixa para a esquerda.
-- **→ / D:** mover uma faixa para a direita.
-- **Espaço / ↑ / W:** pular.
-- **P / Esc:** pausar; durante um desafio, Esc volta para a corrida.
-- **1–4:** selecionar rapidamente uma resposta enquanto um desafio de múltipla escolha está aberto.
-- Mouse, clique e controles na tela também funcionam.
+- **Joystick / ← → / A e D:** mudar de faixa.
+- **Botão A / Z / Espaço:** pular obstáculos.
+- **Botão B / X / P / Esc:** pausar ou retomar.
+- **1–4 ou Z / X / C / V:** selecionar uma resposta no desafio.
+- **Enter:** iniciar, conferir uma sequência ou continuar após responder.
+- **Mouse e botões visuais:** também funcionam para testar no computador.
+
+## Como aparecem os desafios
+
+As perguntas não surgem automaticamente. Três relíquias douradas são colocadas na pista durante cada mundo. O jogador precisa se posicionar na faixa correta e coletar uma relíquia para desbloquear uma pergunta. Se passar por ela sem coletá-la, o jogo continua a corrida normalmente.
+
+## Modo gabinete
+
+A interface foi adaptada para um monitor horizontal de fliperama, com moldura de gabinete, tela de jogo ampla, painel inferior ilustrando joystick e botões A/B e opção de tela cheia. Em um fliperama com encoder USB, configure as direções e botões para enviar as teclas indicadas acima. O jogo também continua testável em um navegador comum.
 
 ## Estrutura
 

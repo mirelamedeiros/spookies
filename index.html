@@ -8,16 +8,17 @@
   <title>Mundos em Corrida</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="arcade-mode">
   <div class="app-shell">
     <header class="topbar">
       <a class="brand" href="#inicio" aria-label="Mundos em Corrida - início">
         <span class="brand-mark" aria-hidden="true">✦</span>
-        <span><strong>MUNDOS</strong><small>EM CORRIDA</small></span>
+        <span><strong>MUNDOS EM CORRIDA</strong><small>ARCADE EDUCATIVO</small></span>
       </a>
       <div class="topbar-right">
         <div class="mini-stat"><span class="stat-icon">💎</span><strong id="top-crystals">0</strong></div>
         <button class="icon-button" id="sound-quick" type="button" aria-label="Ativar ou desativar sons" title="Som">🔊</button>
+        <button class="icon-button cabinet-fullscreen" id="fullscreen-button" type="button" aria-label="Ativar tela cheia" title="Tela cheia">⛶</button>
         <button class="icon-button" id="settings-open" type="button" aria-label="Abrir configurações" title="Configurações">⚙</button>
       </div>
     </header>
@@ -25,11 +26,11 @@
     <main>
       <section class="screen screen-home active" id="home-screen" aria-labelledby="home-title">
         <div class="home-copy">
-          <div class="eyebrow"><span class="eyebrow-dot"></span> UMA AVENTURA PARA APRENDER JOGANDO</div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span> ARCADE EDUCATIVO • APRENDER JOGANDO</div>
           <h1 id="home-title">Corra por novos<br><span>mundos!</span></h1>
           <p>Desvie, colete cristais e resolva desafios para restaurar o Portal do Conhecimento.</p>
           <div class="home-actions">
-            <button class="primary-button" id="play-button" type="button">Jogar agora <span aria-hidden="true">➜</span></button>
+            <button class="primary-button start-button" id="play-button" type="button"><span class="start-lamp" aria-hidden="true"></span> START • JOGAR <span aria-hidden="true">▶</span></button>
             <button class="secondary-button" id="levels-button" type="button">Escolher mundo</button>
           </div>
           <div class="home-facts">
@@ -45,7 +46,7 @@
           <div class="hero-kiko"><div class="kiko-glow"></div><div class="kiko-antenna"></div><div class="kiko-head"><span class="kiko-eye eye-left"></span><span class="kiko-eye eye-right"></span><span class="kiko-smile"></span><span class="kiko-cheek cheek-left"></span><span class="kiko-cheek cheek-right"></span></div><div class="kiko-body"><span class="kiko-badge">✦</span></div><div class="kiko-arm arm-left"></div><div class="kiko-arm arm-right"></div><div class="kiko-leg leg-left"></div><div class="kiko-leg leg-right"></div></div>
           <div class="art-label label-top"><span>✦</span> CURIOSIDADE</div><div class="art-label label-bottom"><span>↗</span> PRÓXIMA PARADA: AVENTURA!</div>
         </div>
-        <div class="home-bottom"><span>✧ FEITO PARA DESCOBRIR</span><span>Use as setas ou WASD para jogar</span></div>
+        <div class="home-bottom"><span>✧ PRESSIONE START PARA COMEÇAR</span><span>JOYSTICK: MOVER · A: PULAR · 1–4: RESPONDER</span></div>
       </section>
 
       <section class="screen level-screen" id="levels-screen" aria-labelledby="levels-title" hidden>
@@ -55,21 +56,28 @@
 
       <section class="screen game-screen" id="game-screen" aria-label="Área de jogo" hidden>
         <div class="game-hud">
-          <div class="hud-world"><button class="icon-button back-game" id="exit-run" type="button" aria-label="Sair da corrida">←</button><div><small id="hud-phase">MUNDO 01</small><strong id="hud-world-name">Floresta Encantada</strong></div></div>
+          <div class="hud-world"><button class="icon-button back-game" id="exit-run" type="button" aria-label="Sair da corrida">↩</button><div><small id="hud-phase">MUNDO 01</small><strong id="hud-world-name">Floresta Encantada</strong></div></div>
           <div class="hud-progress"><div class="progress-label"><span>PROGRESSO</span><strong id="progress-label">0%</strong></div><div class="progress-track"><span id="progress-fill"></span></div></div>
           <div class="hud-score"><span>💎 <strong id="hud-crystals">0</strong></span><span>⭐ <strong id="hud-score">0</strong></span></div>
           <button class="icon-button" id="pause-button" type="button" aria-label="Pausar jogo">Ⅱ</button>
         </div>
         <div class="game-stage">
           <canvas id="game-canvas" width="1000" height="560" aria-label="Corrida de Kiko. Use as setas para mudar de faixa e espaço para pular."></canvas>
-          <div class="stage-tip" id="stage-tip"><span>⌨</span> ← → mover · Espaço pular · P pausar</div>
+          <div class="stage-tip" id="stage-tip"><span>✦</span> PEGUE A RELÍQUIA DOURADA PARA DESBLOQUEAR UM DESAFIO!</div>
           <div class="stage-notice" id="stage-notice" role="status" aria-live="polite"></div>
-          <div class="touch-controls" aria-label="Controles de toque">
+        </div>
+        <div class="arcade-control-deck" aria-label="Painel de controles do fliperama">
+          <div class="control-joystick">
+            <span class="control-caption">JOYSTICK</span>
             <div class="touch-move"><button type="button" data-action="left" aria-label="Mover para esquerda">◀</button><button type="button" data-action="right" aria-label="Mover para direita">▶</button></div>
-            <button type="button" class="touch-jump" data-action="jump" aria-label="Pular">⬆ PULAR</button>
+          </div>
+          <div class="control-message"><strong>COLETE A RELÍQUIA</strong><span>Ela libera uma pergunta especial!</span><small>1–4 ou Z / X / C / V para responder · ENTER para continuar</small></div>
+          <div class="arcade-buttons">
+            <button type="button" class="arcade-button arcade-jump" data-action="jump" aria-label="Botão A: pular"><span>A</span><small>PULAR</small></button>
+            <button type="button" class="arcade-button arcade-pause" data-action="pause" aria-label="Botão B: pausar"><span>B</span><small>PAUSA</small></button>
           </div>
         </div>
-        <div class="game-footer"><span><i class="live-dot"></i> AVENTURA EM ANDAMENTO</span><span id="objective-text">Colete cristais e encontre o portal!</span></div>
+        <div class="game-footer"><span><i class="live-dot"></i> MODO ARCADE</span><span id="objective-text">Pegue as relíquias douradas para liberar desafios!</span></div>
       </section>
 
       <section class="screen completion-screen" id="completion-screen" hidden aria-labelledby="completion-title">
@@ -84,16 +92,16 @@
 
     <div class="modal-backdrop" id="question-modal" hidden>
       <section class="modal-card question-card" role="dialog" aria-modal="true" aria-labelledby="question-title">
-        <div class="modal-topline"><span class="challenge-chip">✦ PAUSA PARA PENSAR</span><button class="icon-button modal-close" id="question-close" type="button" aria-label="Fechar desafio e continuar">×</button></div>
+        <div class="modal-topline"><span class="challenge-chip">✦ RELÍQUIA COLETADA • DESAFIO LIBERADO</span><button class="icon-button modal-close" id="question-close" type="button" aria-label="Fechar desafio e continuar">×</button></div>
         <div class="question-progress"><span id="question-world">DESAFIO DO MUNDO</span><span id="question-count">DESAFIO 1</span></div>
-        <div class="question-mascot" aria-hidden="true">💡</div>
+        <div class="question-mascot" aria-hidden="true">🧩</div>
         <h2 id="question-title">Uma pergunta apareceu!</h2>
         <p class="question-prompt" id="question-prompt"></p>
         <div id="question-visual" class="question-visual" hidden></div>
         <div id="question-options" class="answer-grid"></div>
         <div id="drag-area" class="drag-area" hidden></div>
         <p class="answer-feedback" id="answer-feedback" role="status" aria-live="polite"></p>
-        <div class="question-bottom"><span>🧠 Aprender também faz parte da corrida</span><button id="continue-button" class="primary-button" type="button" hidden>Continuar corrida →</button></div>
+        <div class="question-bottom"><span>🧠 Aprender também faz parte da corrida</span><button id="continue-button" class="primary-button" type="button" hidden>ENTER • CONTINUAR →</button></div>
       </section>
     </div>
 
@@ -126,7 +134,7 @@
         <label class="setting-row"><span><strong>Efeitos sonoros</strong><small>Coletas e respostas</small></span><input id="effects-toggle" type="checkbox" checked><i class="toggle-ui"></i></label>
         <label class="setting-row"><span><strong>Narração</strong><small>Ler os desafios em voz alta</small></span><input id="narration-toggle" type="checkbox"><i class="toggle-ui"></i></label>
         <label class="volume-setting" for="volume-control"><span><strong>Volume</strong><output id="volume-value">50%</output></span><input id="volume-control" type="range" min="0" max="100" value="50"></label>
-        <p class="settings-note">Dica: você também pode usar teclado, mouse ou os controles na tela. Pressione P ou Esc para pausar durante a corrida.</p>
+        <p class="settings-note">Controles do fliperama: joystick/setas para mover, botão A ou Z para pular, botão B para pausar e 1–4 ou Z/X/C/V para escolher respostas. ENTER confirma e continua.</p>
         <button class="primary-button full-button" id="settings-done" type="button">Pronto!</button>
       </section>
     </div>

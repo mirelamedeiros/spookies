@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EcoRunner: Spooky Night Edition - SENAI</title>
+    <!-- Link corrigido para o CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bangers&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -27,162 +28,149 @@
                 <div class="hud-box hearts-box">
                     <span id="lives-display">HP 3/3</span>
                 </div>
-                <button id="btn-pause" class="btn-icon">PAUSA</button>
+                <button id="btn-pause" class="btn-icon">||</button>
             </div>
 
             <!-- Controles Touch -->
             <div class="touch-controls">
-                <button id="btn-left" class="btn-touch">ESQ</button>
+                <button id="btn-left" class="btn-touch">&lt;</button>
                 <div class="vertical-touch">
-                    <button id="btn-jump" class="btn-touch">PULAR</button>
-                    <button id="btn-slide" class="btn-touch">AGACHAR</button>
+                    <button id="btn-jump" class="btn-touch">^</button>
+                    <button id="btn-slide" class="btn-touch">v</button>
                 </div>
-                <button id="btn-right" class="btn-touch">DIR</button>
+                <button id="btn-right" class="btn-touch">&gt;</button>
             </div>
         </div>
 
-        <!-- TELA INICIAL: DESIGN RETRO SUPER-HERÓI / HQ ANOS 90 -->
+        <!-- TELA INICIAL: RETRO ARCADE HALLOWEEN (ESTILO PAC-MAN) -->
         <div id="screen-main" class="screen">
-            <div class="screen-card text-center main-menu comic-frame">
-                <div class="comic-stamp">SENAI RETRO ARCADE</div>
+            <div class="arcade-frame text-center">
+                <div class="arcade-series-badge">SPOOKY ARCADE SERIES&trade;</div>
                 
-                <div class="title-container">
-                    <h1 class="comic-title">ECO RUNNER</h1>
-                    <div class="comic-subtitle">SPOOKY NIGHT EDITION</div>
+                <div class="arcade-logo-box">
+                    <h1 class="arcade-title">ECO-RUNNER</h1>
                 </div>
 
-                <div class="hero-emblem-wrapper">
-                    <div class="city-skyline-bg"></div>
-                    <div class="hero-signal">
-                        <div class="signal-inner">HERO</div>
-                    </div>
+                <div class="arcade-sprites-deco">
+                    <span class="sprite-icon" style="color: #4ade80;">🧟</span>
+                    <span class="sprite-icon" style="color: #fbbf24;">🎃</span>
+                    <span class="sprite-icon" style="color: #c084fc;">🦇</span>
                 </div>
 
-                <p class="arcade-tagline">PRESS START TO SAVE THE CITY</p>
+                <p class="insert-coin blink">INSERT COIN TO PLAY</p>
 
                 <div class="menu-buttons">
-                    <button id="btn-start" class="btn btn-primary btn-large comic-btn">START GAME</button>
-                    <button id="btn-settings" class="btn btn-secondary comic-btn">CONFIGURAÇÕES</button>
+                    <button id="btn-start" class="btn btn-arcade-start">PRESS START</button>
+                    <button id="btn-settings" class="btn btn-arcade-secondary">OPTIONS</button>
                 </div>
+                
+                <div class="arcade-footer">&copy; 2024 SENAI ENTERTAINMENT INC.</div>
             </div>
         </div>
 
-        <!-- TELA 1: SELEÇÃO DE PERSONAGEM (MORTAL KOMBAT / SUPER-HERÓIS) -->
+        <!-- TELA 1: SELEÇÃO DE PERSONAGEM (MONSTROS HALLOWEEN) -->
         <div id="screen-char-select" class="screen hidden">
-            <div class="screen-card text-center mk-card comic-frame">
-                <div class="comic-stamp">CHOOSE YOUR HERO</div>
-                <h2 class="mk-title">SELEÇÃO DE HEROIS</h2>
+            <div class="arcade-frame text-center">
+                <div class="arcade-series-badge">SELECT YOUR MONSTER</div>
                 
                 <div class="mk-fighters-grid">
                     <div class="mk-fighter selected" data-char="KIKO">
                         <div class="mk-avatar-canvas-box">
                             <canvas class="preview-canvas" data-hero="KIKO" width="70" height="70"></canvas>
                         </div>
-                        <span class="mk-name">KIKO</span>
+                        <span class="mk-name">FRANKIKO</span>
                     </div>
                     <div class="mk-fighter" data-char="FOXIE">
                         <div class="mk-avatar-canvas-box">
                             <canvas class="preview-canvas" data-hero="FOXIE" width="70" height="70"></canvas>
                         </div>
-                        <span class="mk-name">FOXIE</span>
+                        <span class="mk-name">BRUXIE</span>
                     </div>
                     <div class="mk-fighter" data-char="LEO">
                         <div class="mk-avatar-canvas-box">
                             <canvas class="preview-canvas" data-hero="LEO" width="70" height="70"></canvas>
                         </div>
-                        <span class="mk-name">LEO</span>
+                        <span class="mk-name">MUMMY LEO</span>
                     </div>
                     <div class="mk-fighter" data-char="BATTY">
                         <div class="mk-avatar-canvas-box">
                             <canvas class="preview-canvas" data-hero="BATTY" width="70" height="70"></canvas>
                         </div>
-                        <span class="mk-name">BATTY</span>
+                        <span class="mk-name">DRACBATTY</span>
                     </div>
                 </div>
 
                 <div class="screen-nav-buttons">
-                    <button id="btn-confirm-char" class="btn btn-primary comic-btn">CONFIRMAR</button>
-                    <button id="btn-back-char" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
+                    <button id="btn-confirm-char" class="btn btn-arcade-start">CONFIRM</button>
+                    <button id="btn-back-char" class="btn btn-arcade-secondary">BACK</button>
                 </div>
             </div>
         </div>
 
-        <!-- TELA 2: SELEÇÃO DE IDADE / ESCOLARIDADE -->
+        <!-- TELA 2: SELEÇÃO DE IDADE -->
         <div id="screen-age-select" class="screen hidden">
-            <div class="screen-card text-center comic-frame">
-                <div class="comic-stamp">NÍVEL DE DESAFIO</div>
-                <h2 class="mk-title">QUAL A SUA IDADE?</h2>
-                <p class="age-subtitle">As perguntas serão adaptadas ao seu nível escolar!</p>
+            <div class="arcade-frame text-center">
+                <div class="arcade-series-badge">SELECT DIFFICULTY</div>
                 
                 <div class="age-buttons-grid">
-                    <button class="btn btn-age comic-btn" data-age="infantil">
-                        <div class="age-badge-icon">INFANTIL</div>
-                        <div><strong>4 a 6 anos</strong><br><small>Perguntas Visuais e Cores</small></div>
-                    </button>
-                    <button class="btn btn-age comic-btn" data-age="junior">
-                        <div class="age-badge-icon">FUND. I</div>
-                        <div><strong>7 a 9 anos</strong><br><small>Matemática e Reciclagem</small></div>
-                    </button>
-                    <button class="btn btn-age comic-btn" data-age="senior">
-                        <div class="age-badge-icon">FUND. II</div>
-                        <div><strong>10+ anos</strong><br><small>Lógica e Sustentabilidade</small></div>
-                    </button>
+                    <button class="btn btn-arcade-secondary btn-age" data-age="infantil">EASY (4-6 ANOS)</button>
+                    <button class="btn btn-arcade-secondary btn-age" data-age="junior">NORMAL (7-9 ANOS)</button>
+                    <button class="btn btn-arcade-secondary btn-age" data-age="senior">HARD (10+ ANOS)</button>
                 </div>
 
-                <button id="btn-back-age" class="btn btn-secondary comic-btn margin-top-10">MENU PRINCIPAL</button>
+                <button id="btn-back-age" class="btn btn-arcade-secondary margin-top-10">BACK</button>
             </div>
         </div>
 
         <!-- TELA DE RESGATE (QUIZ) -->
         <div id="screen-quiz" class="screen hidden">
-            <div class="quiz-card text-center comic-frame">
-                <div class="comic-stamp danger-stamp">SEGUNDA CHANCE</div>
-                <div class="timer-box">TEMPO: <span id="quiz-timer">30</span>s</div>
-                <h3 id="quiz-question">Pergunta de Resgate...</h3>
+            <div class="arcade-frame text-center border-red">
+                <div class="arcade-series-badge bg-red">CONTINUE?</div>
+                <div class="timer-box">TIME: <span id="quiz-timer">30</span>s</div>
+                <h3 id="quiz-question" class="arcade-text">Pergunta de Resgate...</h3>
                 <div id="quiz-options" class="options-grid"></div>
             </div>
         </div>
 
         <!-- TELA DE GAME OVER -->
         <div id="screen-gameover" class="screen hidden">
-            <div class="screen-card text-center gameover-card comic-frame">
+            <div class="arcade-frame text-center">
                 <h1 class="gameover-title">GAME OVER</h1>
-                <p>Você perdeu suas 3 vidas!</p>
-                <div class="score-summary">
-                    <p>Lixos Reciclados: <strong id="go-trash">0</strong></p>
-                    <p>Pontuação Final: <strong id="go-score">0</strong></p>
+                <div class="score-summary arcade-text">
+                    <p>TRASH: <strong id="go-trash" class="color-yellow">0</strong></p>
+                    <p>SCORE: <strong id="go-score" class="color-yellow">0</strong></p>
                 </div>
                 <div class="menu-buttons">
-                    <button id="btn-restart" class="btn btn-primary btn-large comic-btn">JOGAR NOVAMENTE</button>
-                    <button id="btn-go-home" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
+                    <button id="btn-restart" class="btn btn-arcade-start">RETRY</button>
+                    <button id="btn-go-home" class="btn btn-arcade-secondary">MAIN MENU</button>
                 </div>
             </div>
         </div>
 
         <!-- TELA DE PAUSA -->
         <div id="screen-pause" class="screen hidden">
-            <div class="screen-card text-center comic-frame">
-                <h2>JOGO PAUSADO</h2>
+            <div class="arcade-frame text-center">
+                <h2 class="arcade-text">PAUSED</h2>
                 <div class="menu-buttons">
-                    <button id="btn-resume" class="btn btn-primary comic-btn">CONTINUAR</button>
-                    <button id="btn-menu-pause" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
+                    <button id="btn-resume" class="btn btn-arcade-start">RESUME</button>
+                    <button id="btn-menu-pause" class="btn btn-arcade-secondary">MAIN MENU</button>
                 </div>
             </div>
         </div>
 
         <!-- CONFIGURAÇÕES -->
         <div id="screen-settings" class="screen hidden">
-            <div class="screen-card comic-frame">
-                <h2>CONFIGURAÇÕES</h2>
-                <div class="setting-item">
-                    <span>Efeitos Sonoros</span>
+            <div class="arcade-frame">
+                <div class="arcade-series-badge">SETTINGS</div>
+                <div class="setting-item arcade-text">
+                    <span>SOUND FX</span>
                     <input type="checkbox" id="setting-sfx" checked>
                 </div>
-                <div class="setting-item">
-                    <span>Narração em Voz Alta</span>
+                <div class="setting-item arcade-text">
+                    <span>VOICE READ</span>
                     <input type="checkbox" id="setting-tts" checked>
                 </div>
-                <button id="btn-back-settings" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
+                <button id="btn-back-settings" class="btn btn-arcade-secondary">BACK</button>
             </div>
         </div>
     </div>

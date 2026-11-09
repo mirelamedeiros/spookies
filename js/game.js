@@ -498,3 +498,4 @@ class Game {
 window.onload = () => {
     window.game = new Game();
 };
+this.renderCharacterPreviews();

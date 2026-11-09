@@ -4,14 +4,14 @@
     padding: 0;
     user-select: none;
     -webkit-user-select: none;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Press Start 2P', monospace, sans-serif;
 }
 
 body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #05020a;
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,11 +23,11 @@ body, html {
     height: 100vh;
     max-width: 1000px;
     max-height: 650px;
-    background: #090514;
-    box-shadow: 0 0 50px #8b5cf6, 0 0 100px rgba(139, 92, 246, 0.4);
-    border-radius: 20px;
+    background: #000;
+    box-shadow: 0 0 30px rgba(29, 78, 216, 0.6);
+    border-radius: 12px;
     overflow: hidden;
-    border: 5px solid #a855f7;
+    border: 4px solid #1d4ed8;
 }
 
 canvas {
@@ -36,7 +36,7 @@ canvas {
     display: block;
 }
 
-/* HUD Retro Arcade */
+/* HUD RETRO */
 #hud {
     position: absolute;
     top: 0;
@@ -58,14 +58,12 @@ canvas {
 }
 
 .hud-box {
-    background: #1e1b4b;
-    border: 3px solid #fbbf24;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-family: 'Press Start 2P', monospace;
+    background: #000;
+    border: 2px solid #fde047;
+    padding: 8px 12px;
+    border-radius: 6px;
     font-size: 0.75rem;
-    color: #fbbf24;
-    box-shadow: 4px 4px 0 #000;
+    color: #fde047;
 }
 
 .hud-val {
@@ -74,176 +72,126 @@ canvas {
 }
 
 .hearts-box {
-    font-size: 0.75rem;
-    background: #4c1d95;
+    background: #000;
     border-color: #ef4444;
     color: #ef4444;
 }
 
-/* Estilo de Molduras HQ Retro (Batman / Homem-Aranha Anos 90) */
+/* TELAS MODAIS / ARCADE FRAME */
 .screen {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(5, 2, 10, 0.90);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
 }
 
-.comic-frame {
-    background: linear-gradient(160deg, #180e29 0%, #0d071a 100%);
-    border: 5px solid #fbbf24;
-    border-radius: 20px;
-    padding: 30px;
-    width: 92%;
-    max-width: 530px;
-    box-shadow: 0 0 35px rgba(251, 191, 36, 0.35), 10px 10px 0 #000;
+.arcade-frame {
+    background: #000;
+    border: 4px double #1d4ed8;
+    border-radius: 10px;
+    padding: 25px;
+    width: 90%;
+    max-width: 520px;
     display: flex;
     flex-direction: column;
     gap: 16px;
     color: #fff;
     position: relative;
+    box-shadow: 0 0 20px rgba(29, 78, 216, 0.6);
 }
 
-.comic-stamp {
-    background: #dc2626;
+.arcade-series-badge {
     color: #fff;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     padding: 6px 14px;
+    border: 2px solid #dc2626;
+    border-radius: 20px;
     display: inline-block;
     margin: 0 auto;
-    border: 3px solid #fff;
-    box-shadow: 4px 4px 0 #000;
-    transform: rotate(-1deg);
+    background: #000;
 }
 
-.danger-stamp {
-    background: #b91c1c;
-}
+.bg-red { background: #dc2626; color: #fff; }
+.border-red { border-color: #dc2626; box-shadow: 0 0 20px rgba(220, 38, 38, 0.6); }
 
-/* Título de Super-Herói HQ */
-.title-container {
-    margin: 5px 0;
-}
-
-.comic-title {
-    font-family: 'Bangers', cursive, 'Press Start 2P';
-    font-size: 3.5rem;
-    color: #fbbf24;
-    text-shadow: 5px 5px 0 #b45309, 9px 9px 0 #000;
-    letter-spacing: 3px;
-    line-height: 1;
-}
-
-.comic-subtitle {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.75rem;
-    color: #a855f7;
-    text-shadow: 2px 2px 0 #000;
-    margin-top: 5px;
-}
-
-/* Emblema do Bat-Sinal / Sinal de Herói */
-.hero-emblem-wrapper {
-    position: relative;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-    overflow: hidden;
+/* LOGO TIPO PAC-MAN */
+.arcade-logo-box {
+    background: #000;
+    border: 4px solid #dc2626;
     border-radius: 12px;
-    border: 3px solid #a855f7;
-    background: #0a0614;
+    padding: 18px 8px;
+    margin: 6px 0;
 }
 
-.city-skyline-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(90deg, #130a24 0px, #130a24 25px, #090412 25px, #090412 40px);
-    opacity: 0.7;
-}
-
-.hero-signal {
-    position: relative;
-    width: 110px;
-    height: 70px;
-    background: radial-gradient(circle, #fde047 30%, #ca8a04 90%);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 35px #fde047;
-    animation: signalPulse 2s ease-in-out infinite alternate;
-}
-
-@keyframes signalPulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 20px #fde047; }
-    100% { transform: scale(1.05); box-shadow: 0 0 45px #fde047; }
-}
-
-.signal-inner {
-    font-family: 'Bangers', cursive;
-    font-size: 1.8rem;
-    color: #000;
+.arcade-title {
+    font-size: 2rem;
+    color: #fde047;
+    text-shadow: 3px 3px 0 #b45309, -3px -3px 0 #b45309, 3px -3px 0 #b45309, -3px 3px 0 #b45309;
     letter-spacing: 2px;
+    margin: 0;
 }
 
-.arcade-tagline {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.7rem;
-    color: #4ade80;
-    animation: blink 1s infinite;
+.arcade-sprites-deco {
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 30px;
+}
+
+.insert-coin {
+    font-size: 0.75rem;
+    color: #38bdf8;
+    margin: 8px 0;
+}
+
+.blink {
+    animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-    50% { opacity: 0.3; }
+    50% { opacity: 0; }
 }
 
-/* Seleção MK / Heróis */
-.mk-title {
-    font-family: 'Press Start 2P', monospace;
-    color: #fbbf24;
-    font-size: 0.95rem;
-    margin-bottom: 5px;
+.arcade-footer {
+    font-size: 0.5rem;
+    color: #9ca3af;
+    margin-top: 6px;
 }
 
+/* GRADE DE PERSONAGENS */
 .mk-fighters-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin: 10px 0;
 }
 
 .mk-fighter {
-    background: #130924;
-    border: 3px solid #6b21a8;
-    border-radius: 14px;
-    padding: 10px 4px;
+    background: #050510;
+    border: 2px solid #1d4ed8;
+    border-radius: 8px;
+    padding: 10px 6px;
     cursor: pointer;
-    transition: transform 0.15s, border-color 0.15s;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: 0.15s;
 }
 
 .mk-fighter:hover {
-    transform: translateY(-4px);
-    border-color: #a855f7;
+    border-color: #38bdf8;
 }
 
 .mk-fighter.selected {
-    border-color: #fbbf24 !important;
-    background: #3b0764 !important;
-    box-shadow: 0 0 20px #fbbf24;
-    transform: scale(1.08);
+    border-color: #fde047 !important;
+    background: #1e1b4b !important;
+    box-shadow: 0 0 12px #fde047;
 }
 
 .mk-avatar-canvas-box {
@@ -254,203 +202,91 @@ canvas {
     align-items: center;
 }
 
-.preview-canvas {
-    width: 70px;
-    height: 70px;
-}
-
 .mk-name {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     color: #fff;
     margin-top: 8px;
 }
 
-.screen-nav-buttons {
+.screen-nav-buttons, .menu-buttons, .age-buttons-grid {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
 }
 
-/* Faixa Etária */
-.age-subtitle {
-    font-size: 0.85rem;
-    color: #cbd5e1;
-}
-
-.age-buttons-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.btn-age {
-    background: #130924;
-    border: 3px solid #a855f7;
-    color: #fff;
-    padding: 12px 16px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
-}
-
-.btn-age:hover {
-    background: #3b0764;
-    border-color: #fbbf24;
-}
-
-.age-badge-icon {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.55rem;
-    background: #fbbf24;
-    color: #000;
-    padding: 6px 8px;
-    border-radius: 6px;
-}
-
-.margin-top-10 {
-    margin-top: 10px;
-}
-
-.menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
+/* BOTÕES ARCADE */
 .btn {
     border: none;
-    padding: 14px 20px;
-    border-radius: 10px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.8rem;
+    padding: 12px 16px;
+    font-size: 0.75rem;
     cursor: pointer;
-    box-shadow: 4px 4px 0 #000;
-    transition: transform 0.1s;
+    border-radius: 4px;
+    transition: 0.15s;
 }
 
-.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+.btn-arcade-start {
+    background: #000;
+    color: #fde047;
+    border: 2px solid #fde047;
+}
 
-.btn-primary {
-    background: #16a34a;
+.btn-arcade-start:hover {
+    background: #fde047;
+    color: #000;
+}
+
+.btn-arcade-secondary {
+    background: #000;
     color: #fff;
-    border: 3px solid #86efac;
-}
-
-.btn-secondary {
-    background: #334155;
-    color: #fff;
-    border: 3px solid #94a3b8;
-}
-
-.comic-btn {
-    box-shadow: 5px 5px 0 #000;
-}
-
-.btn-icon {
-    background: #fbbf24;
-    border: 3px solid #000;
-    border-radius: 8px;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.65rem;
-    box-shadow: 3px 3px 0 #000;
-}
-
-/* Quiz Resgate */
-.quiz-card {
-    background: #1e0a38;
-    border: 5px solid #ef4444;
-    border-radius: 18px;
-    padding: 25px;
-    width: 92%;
-    max-width: 550px;
-    box-shadow: 8px 8px 0 #000;
-    color: #fff;
-}
-
-.quiz-badge {
-    font-family: 'Press Start 2P', monospace;
-    color: #ef4444;
-    font-size: 0.85rem;
-    margin-bottom: 8px;
-}
-
-.timer-box {
-    font-family: 'Press Start 2P', monospace;
-    background: #dc2626;
-    color: #fff;
-    display: inline-block;
-    padding: 6px 16px;
-    border-radius: 6px;
-    font-size: 1rem;
-    margin-bottom: 12px;
     border: 2px solid #fff;
 }
 
-#quiz-question {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    font-weight: 800;
+.btn-arcade-secondary:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-icon {
+    background: #000;
+    color: #fde047;
+    border: 2px solid #fde047;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+/* QUIZ */
+.timer-box {
+    background: #dc2626;
+    color: #fff;
+    padding: 6px 12px;
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin: 8px 0;
 }
 
 .options-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .quiz-opt {
-    background: #2e1065;
-    border: 3px solid #a855f7;
-    padding: 16px;
-    border-radius: 10px;
-    font-weight: 800;
-    font-size: 1.05rem;
+    background: #000;
+    border: 2px solid #38bdf8;
     color: #fff;
+    padding: 12px;
+    font-size: 0.7rem;
     cursor: pointer;
 }
 
-.quiz-opt:hover { background: #581c87; }
-.quiz-opt.correct { background: #15803d !important; border-color: #4ade80 !important; }
-.quiz-opt.wrong { background: #b91c1c !important; border-color: #fca5a5 !important; }
-
-/* Touch */
-.touch-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    pointer-events: auto;
-}
-
-.vertical-touch {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.btn-touch {
-    background: rgba(168, 85, 247, 0.5);
-    border: 3px solid #a855f7;
-    color: #fff;
-    font-family: 'Press Start 2P', monospace;
-    padding: 16px;
-    border-radius: 8px;
-    font-size: 0.7rem;
-    backdrop-filter: blur(4px);
-}
+.quiz-opt:hover { background: #38bdf8; color: #000; }
 
 .gameover-title {
-    font-family: 'Press Start 2P', monospace;
-    color: #ef4444;
-    font-size: 2.2rem;
-    text-shadow: 4px 4px 0 #000;
+    color: #dc2626;
+    font-size: 1.8rem;
 }
 
 .setting-item {
@@ -458,8 +294,11 @@ canvas {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    font-weight: 800;
+    font-size: 0.7rem;
 }
 
+.color-yellow { color: #fde047; }
+.arcade-text { font-size: 0.75rem; line-height: 1.6; }
 .text-center { text-align: center; }
+.margin-top-10 { margin-top: 10px; }
 .hidden { display: none !important; }

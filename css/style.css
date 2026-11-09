@@ -11,7 +11,7 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: linear-gradient(135deg, #0f172a, #1e1b4b);
+    background: #05020a;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,11 +23,11 @@ body, html {
     height: 100vh;
     max-width: 1000px;
     max-height: 650px;
-    background: #000;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(99, 102, 241, 0.3);
-    border-radius: 24px;
+    background: #090514;
+    box-shadow: 0 0 50px #8b5cf6, 0 0 100px rgba(139, 92, 246, 0.4);
+    border-radius: 20px;
     overflow: hidden;
-    border: 4px solid rgba(255, 255, 255, 0.1);
+    border: 5px solid #a855f7;
 }
 
 canvas {
@@ -36,29 +36,7 @@ canvas {
     display: block;
 }
 
-/* Banner de Bônus na Tela */
-.bonus-banner {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, #f59e0b, #ef4444);
-    color: white;
-    font-weight: 900;
-    padding: 8px 24px;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #f59e0b;
-    z-index: 5;
-    font-size: 1.1rem;
-    animation: pulse 1s infinite alternate;
-}
-
-@keyframes pulse {
-    from { transform: translateX(-50%) scale(1); }
-    to { transform: translateX(-50%) scale(1.08); }
-}
-
-/* HUD Interface */
+/* HUD Retro Arcade */
 #hud {
     position: absolute;
     top: 0;
@@ -69,7 +47,7 @@ canvas {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px;
+    padding: 15px;
 }
 
 .hud-top {
@@ -79,234 +57,347 @@ canvas {
     pointer-events: auto;
 }
 
-.hud-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
+.hud-box {
+    background: #1e1b4b;
+    border: 3px solid #fbbf24;
     padding: 8px 16px;
-    border-radius: 50px;
-    font-weight: 800;
-    color: #1e293b;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 1rem;
-    border: 2px solid #ffffff;
+    border-radius: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.75rem;
+    color: #fbbf24;
+    box-shadow: 4px 4px 0 #000;
 }
 
-.progress-container {
-    position: absolute;
-    top: 75px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    pointer-events: auto;
+.hud-val {
+    color: #fff;
+    margin-left: 6px;
 }
 
-.progress-bar-bg {
-    flex-grow: 1;
-    height: 18px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+.hearts-box {
+    font-size: 0.75rem;
+    background: #4c1d95;
+    border-color: #ef4444;
+    color: #ef4444;
 }
 
-.progress-bar-fill {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #10b981, #34d399);
-    box-shadow: 0 0 12px #34d399;
-    transition: width 0.3s ease;
-}
-
-/* Telas / Modais */
+/* Estilo de Molduras HQ Retro (Batman / Homem-Aranha Anos 90) */
 .screen {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(15, 23, 42, 0.88);
-    backdrop-filter: blur(12px);
+    background: rgba(5, 2, 10, 0.90);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
 }
 
-.screen-card {
-    background: #ffffff;
-    border-radius: 28px;
+.comic-frame {
+    background: linear-gradient(160deg, #180e29 0%, #0d071a 100%);
+    border: 5px solid #fbbf24;
+    border-radius: 20px;
     padding: 30px;
-    width: 90%;
-    max-width: 520px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    width: 92%;
+    max-width: 530px;
+    box-shadow: 0 0 35px rgba(251, 191, 36, 0.35), 10px 10px 0 #000;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    border: 4px solid #f1f5f9;
+    color: #fff;
+    position: relative;
 }
 
-.text-center { text-align: center; }
-
-.game-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 3.2rem;
-    background: linear-gradient(135deg, #10b981, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.comic-stamp {
+    background: #dc2626;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    padding: 6px 14px;
+    display: inline-block;
+    margin: 0 auto;
+    border: 3px solid #fff;
+    box-shadow: 4px 4px 0 #000;
+    transform: rotate(-1deg);
 }
 
-.subtitle {
-    font-weight: 800;
-    color: #64748b;
-    margin-top: -8px;
+.danger-stamp {
+    background: #b91c1c;
 }
 
-.avatar-preview {
-    font-size: 4.5rem;
+/* Título de Super-Herói HQ */
+.title-container {
     margin: 5px 0;
+}
+
+.comic-title {
+    font-family: 'Bangers', cursive, 'Press Start 2P';
+    font-size: 3.5rem;
+    color: #fbbf24;
+    text-shadow: 5px 5px 0 #b45309, 9px 9px 0 #000;
+    letter-spacing: 3px;
+    line-height: 1;
+}
+
+.comic-subtitle {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.75rem;
+    color: #a855f7;
+    text-shadow: 2px 2px 0 #000;
+    margin-top: 5px;
+}
+
+/* Emblema do Bat-Sinal / Sinal de Herói */
+.hero-emblem-wrapper {
+    position: relative;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 3px solid #a855f7;
+    background: #0a0614;
+}
+
+.city-skyline-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(90deg, #130a24 0px, #130a24 25px, #090412 25px, #090412 40px);
+    opacity: 0.7;
+}
+
+.hero-signal {
+    position: relative;
+    width: 110px;
+    height: 70px;
+    background: radial-gradient(circle, #fde047 30%, #ca8a04 90%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 35px #fde047;
+    animation: signalPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes signalPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 20px #fde047; }
+    100% { transform: scale(1.05); box-shadow: 0 0 45px #fde047; }
+}
+
+.signal-inner {
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    color: #000;
+    letter-spacing: 2px;
+}
+
+.arcade-tagline {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    color: #4ade80;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.3; }
+}
+
+/* Seleção MK / Heróis */
+.mk-title {
+    font-family: 'Press Start 2P', monospace;
+    color: #fbbf24;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+}
+
+.mk-fighters-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 10px 0;
+}
+
+.mk-fighter {
+    background: #130924;
+    border: 3px solid #6b21a8;
+    border-radius: 14px;
+    padding: 10px 4px;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mk-fighter:hover {
+    transform: translateY(-4px);
+    border-color: #a855f7;
+}
+
+.mk-fighter.selected {
+    border-color: #fbbf24 !important;
+    background: #3b0764 !important;
+    box-shadow: 0 0 20px #fbbf24;
+    transform: scale(1.08);
+}
+
+.mk-avatar-canvas-box {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-canvas {
+    width: 70px;
+    height: 70px;
+}
+
+.mk-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    color: #fff;
+    margin-top: 8px;
+}
+
+.screen-nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Faixa Etária */
+.age-subtitle {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+.age-buttons-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-age {
+    background: #130924;
+    border: 3px solid #a855f7;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-age:hover {
+    background: #3b0764;
+    border-color: #fbbf24;
+}
+
+.age-badge-icon {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    background: #fbbf24;
+    color: #000;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
 }
 
 .menu-buttons {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    width: 100%;
 }
 
 .btn {
     border: none;
-    padding: 14px 22px;
-    border-radius: 16px;
-    font-weight: 800;
-    font-size: 1.1rem;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    box-shadow: 4px 4px 0 #000;
+    transition: transform 0.1s;
 }
 
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: translateY(1px); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
 
 .btn-primary {
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: white;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    background: #16a34a;
+    color: #fff;
+    border: 3px solid #86efac;
 }
 
 .btn-secondary {
-    background: #f1f5f9;
-    color: #334155;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background: #334155;
+    color: #fff;
+    border: 3px solid #94a3b8;
+}
+
+.comic-btn {
+    box-shadow: 5px 5px 0 #000;
 }
 
 .btn-icon {
-    background: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
+    background: #fbbf24;
+    border: 3px solid #000;
+    border-radius: 8px;
+    padding: 8px 12px;
     cursor: pointer;
-    font-size: 1.2rem;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    box-shadow: 3px 3px 0 #000;
 }
 
-/* Loja de Personagens */
-.shop-balance {
-    color: #64748b;
-    font-size: 1.1rem;
-}
-
-.chars-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-
-.char-card {
-    background: #f8fafc;
-    border: 3px solid #e2e8f0;
-    border-radius: 18px;
-    padding: 12px 6px;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.char-card.selected {
-    border-color: #10b981;
-    background: #ecfdf5;
-    transform: scale(1.05);
-}
-
-.char-icon {
-    font-size: 2.5rem;
-}
-
-/* Fases */
-.levels-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-.level-card {
-    background: #f8fafc;
-    border: 3px solid #e2e8f0;
-    border-radius: 18px;
-    padding: 14px 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.level-card:hover {
-    transform: translateY(-4px);
-    border-color: #10b981;
-}
-
-/* Quiz Caixa Surpresa */
+/* Quiz Resgate */
 .quiz-card {
-    background: #ffffff;
-    border-radius: 28px;
-    padding: 28px;
-    width: 90%;
-    max-width: 580px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    border: 4px solid #fef3c7;
+    background: #1e0a38;
+    border: 5px solid #ef4444;
+    border-radius: 18px;
+    padding: 25px;
+    width: 92%;
+    max-width: 550px;
+    box-shadow: 8px 8px 0 #000;
+    color: #fff;
 }
 
-.quiz-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.quiz-badge {
+    font-family: 'Press Start 2P', monospace;
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.timer-box {
+    font-family: 'Press Start 2P', monospace;
+    background: #dc2626;
+    color: #fff;
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
     margin-bottom: 12px;
-}
-
-.badge {
-    background: #fef3c7;
-    color: #d97706;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 800;
-    font-size: 0.90rem;
+    border: 2px solid #fff;
 }
 
 #quiz-question {
-    font-size: 1.3rem;
-    color: #1e293b;
-    margin-bottom: 18px;
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    font-weight: 800;
 }
 
 .options-grid {
@@ -316,45 +407,59 @@ canvas {
 }
 
 .quiz-opt {
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
+    background: #2e1065;
+    border: 3px solid #a855f7;
     padding: 16px;
-    border-radius: 16px;
-    font-size: 1.1rem;
+    border-radius: 10px;
     font-weight: 800;
-    color: #334155;
+    font-size: 1.05rem;
+    color: #fff;
     cursor: pointer;
 }
 
-.quiz-opt.correct {
-    background: #d1fae5 !important;
-    border-color: #10b981 !important;
-    color: #065f46 !important;
-}
+.quiz-opt:hover { background: #581c87; }
+.quiz-opt.correct { background: #15803d !important; border-color: #4ade80 !important; }
+.quiz-opt.wrong { background: #b91c1c !important; border-color: #fca5a5 !important; }
 
-.quiz-opt.wrong {
-    background: #fee2e2 !important;
-    border-color: #ef4444 !important;
-    color: #991b1b !important;
-}
-
+/* Touch */
 .touch-controls {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
     pointer-events: auto;
 }
 
-.btn-touch {
-    background: rgba(255, 255, 255, 0.4);
-    border: 2px solid #fff;
-    color: #fff;
-    font-weight: 900;
-    padding: 18px 24px;
-    border-radius: 20px;
-    font-size: 1.1rem;
-    backdrop-filter: blur(6px);
+.vertical-touch {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.action-pad { display: flex; gap: 12px; }
+.btn-touch {
+    background: rgba(168, 85, 247, 0.5);
+    border: 3px solid #a855f7;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    backdrop-filter: blur(4px);
+}
+
+.gameover-title {
+    font-family: 'Press Start 2P', monospace;
+    color: #ef4444;
+    font-size: 2.2rem;
+    text-shadow: 4px 4px 0 #000;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-weight: 800;
+}
+
+.text-center { text-align: center; }
 .hidden { display: none !important; }

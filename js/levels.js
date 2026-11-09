@@ -1,74 +1,8 @@
-const LEVELS_DATA = [
-    {
-        id: 1,
-        name: "Floresta Verde",
-        icon: "🌲",
-        skyColor: "#a0e9ff",
-        groundColor: "#4caf50",
-        dirtColor: "#388e3c",
-        bgElements: ["🌳", "☁️", "🌸"],
-        obstaclesLow: ["🪵", "🪨"],  // Obstáculos para pular
-        obstaclesHigh: ["📦", "🚧"], // Obstáculos para agachar
-        trashItems: ["🍾", "📰", "🥫"], // Lixo reciclável (garrafa, jornal, lata)
-    },
-    {
-        id: 2,
-        name: "Cidade Limpa",
-        icon: "🏙️",
-        skyColor: "#38bdf8",
-        groundColor: "#64748b",
-        dirtColor: "#334155",
-        bgElements: ["🏢", "🚗", "💡"],
-        obstaclesLow: ["🛢️", "📦"],
-        obstaclesHigh: ["🚧", "🚫"],
-        trashItems: ["🥤", "📦", "🔋"],
-    },
-    {
-        id: 3,
-        name: "Praia Ecológica",
-        icon: "🏖️",
-        skyColor: "#7dd3fc",
-        groundColor: "#fde047",
-        dirtColor: "#eab308",
-        bgElements: ["🌴", "⛵", "🌊"],
-        obstaclesLow: ["⚓", "🦀"],
-        obstaclesHigh: ["📦", "🚧"],
-        trashItems: ["🍾", "🛍️", "🥫"],
-    },
-    {
-        id: 4,
-        name: "Montanha Reciclável",
-        icon: "🏔️",
-        skyColor: "#e0f2fe",
-        groundColor: "#e2e8f0",
-        dirtColor: "#94a3b8",
-        bgElements: ["🏔️", "🌲", "☁️"],
-        obstaclesLow: ["❄️", "🪨"],
-        obstaclesHigh: ["🪵", "🚧"],
-        trashItems: ["📰", "🥤", "📦"],
-    },
-    {
-        id: 5,
-        name: "Estação Espacial Eco",
-        icon: "🚀",
-        skyColor: "#0f172a",
-        groundColor: "#1e293b",
-        dirtColor: "#0f172a",
-        bgElements: ["⭐", "🪐", "🛸"],
-        obstaclesLow: ["⚡", "🛰️"],
-        obstaclesHigh: ["☄️", "🚧"],
-        trashItems: ["🔋", "⚙️", "🥫"],
-    },
-    {
-        id: 6,
-        name: "Mundo Sustentável",
-        icon: "👑",
-        skyColor: "#3b0764",
-        groundColor: "#7e22ce",
-        dirtColor: "#581c87",
-        bgElements: ["🏰", "✨", "👑"],
-        obstaclesLow: ["🔥", "⚡"],
-        obstaclesHigh: ["☄️", "🚧"],
-        trashItems: ["👑", "💎", "🍾"],
-    }
-];
+const SPOOKY_THEME = {
+    skyColor: "#090514",
+    trackColor: "#1e1b4b",
+    lineColor: "#a855f7",
+    bgMonsters: ["*", "+", "o", "x"],
+    obstacles: ["CAIXA", "PEDRA", "TRONCO", "ESPINHO"],
+    trashItems: ["GARRAFA", "JORNAL", "LATA", "PLASTICO"]
+};

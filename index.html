@@ -3,193 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EcoRunner: Coleta & Sabedoria - SENAI</title>
+    <title>EcoRunner: Spooky Night Edition - SENAI</title>
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bangers&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="game-container">
-        <!-- Canvas principal da corrida lateral -->
+        <!-- Canvas principal do Jogo -->
         <canvas id="gameCanvas"></canvas>
 
-        <!-- Mensagem de Bônus / Upgrade na Tela -->
-        <div id="bonus-banner" class="bonus-banner hidden">🚀 UPGRADE ATIVADO! PONTOS X2! 🚀</div>
-
-        <!-- HUD Durante a Corrida -->
+        <!-- HUD Arcade Durante a Corrida -->
         <div id="hud" class="hidden">
             <div class="hud-top">
-                <div class="hud-card">
-                    <span class="icon">🪙</span>
-                    <span id="coins-display">0</span>
+                <div class="hud-box">
+                    <span class="hud-label">LIXO:</span>
+                    <span id="trash-display" class="hud-val">0</span>
                 </div>
-                <div class="hud-card">
-                    <span class="icon">♻️</span>
-                    <span id="trash-display">0</span>
+                <div class="hud-box">
+                    <span class="hud-label">PONTOS:</span>
+                    <span id="score-display" class="hud-val">0</span>
                 </div>
-                <div class="hud-card">
-                    <span class="icon">⭐</span>
-                    <span id="score-display">0</span>
+                <div class="hud-box hearts-box">
+                    <span id="lives-display">HP 3/3</span>
                 </div>
-                <div class="hud-card">
-                    <span id="phase-display">Fase 1</span>
-                </div>
-                <button id="btn-pause" class="btn-icon">⏸️</button>
-            </div>
-
-            <!-- Barra de Progresso da Fase -->
-            <div class="progress-container">
-                <div class="progress-bar-bg">
-                    <div id="phase-progress-bar" class="progress-bar-fill"></div>
-                </div>
-                <span id="progress-icon">🏁</span>
+                <button id="btn-pause" class="btn-icon">PAUSA</button>
             </div>
 
             <!-- Controles Touch -->
             <div class="touch-controls">
-                <div class="action-pad">
-                    <button id="btn-jump" class="btn-touch btn-action">▲ PULAR</button>
-                    <button id="btn-slide" class="btn-touch btn-action">▼ AGACHAR</button>
+                <button id="btn-left" class="btn-touch">ESQ</button>
+                <div class="vertical-touch">
+                    <button id="btn-jump" class="btn-touch">PULAR</button>
+                    <button id="btn-slide" class="btn-touch">AGACHAR</button>
                 </div>
+                <button id="btn-right" class="btn-touch">DIR</button>
             </div>
         </div>
 
-        <!-- TELA INICIAL -->
+        <!-- TELA INICIAL: DESIGN RETRO SUPER-HERÓI / HQ ANOS 90 -->
         <div id="screen-main" class="screen">
-            <div class="screen-card text-center">
-                <h1 class="game-title">EcoRunner</h1>
-                <p class="subtitle">Corrida Ecológica do SENAI</p>
-                <div class="avatar-preview">
-                    <div id="main-avatar-display">🤖</div>
+            <div class="screen-card text-center main-menu comic-frame">
+                <div class="comic-stamp">SENAI RETRO ARCADE</div>
+                
+                <div class="title-container">
+                    <h1 class="comic-title">ECO RUNNER</h1>
+                    <div class="comic-subtitle">SPOOKY NIGHT EDITION</div>
                 </div>
-                <p class="story-desc">Corra, colete lixos recicláveis, pegue as Caixas Surpresa e ganhe Super Upgrades!</p>
+
+                <div class="hero-emblem-wrapper">
+                    <div class="city-skyline-bg"></div>
+                    <div class="hero-signal">
+                        <div class="signal-inner">HERO</div>
+                    </div>
+                </div>
+
+                <p class="arcade-tagline">PRESS START TO SAVE THE CITY</p>
+
                 <div class="menu-buttons">
-                    <button id="btn-select-age" class="btn btn-primary btn-large">🚀 JOGAR AGORA</button>
-                    <button id="btn-char-select" class="btn btn-secondary">🎭 LOJA DE PERSONAGENS</button>
-                    <button id="btn-levels" class="btn btn-secondary">🗺️ SELEÇÃO DE FASES</button>
-                    <button id="btn-settings" class="btn btn-secondary">⚙️ CONFIGURAÇÕES</button>
+                    <button id="btn-start" class="btn btn-primary btn-large comic-btn">START GAME</button>
+                    <button id="btn-settings" class="btn btn-secondary comic-btn">CONFIGURAÇÕES</button>
                 </div>
             </div>
         </div>
 
-        <!-- TELA DE SELEÇÃO DE IDADE -->
-        <div id="screen-age" class="screen hidden">
-            <div class="screen-card text-center">
-                <h2>🎂 Escolha sua Idade</h2>
-                <p>As perguntas das Caixas Surpresa serão adaptadas para você!</p>
-                <div class="age-grid">
-                    <button class="btn btn-age" data-age="infantil">4 a 6 anos<br><small>Nível Inicial</small></button>
-                    <button class="btn btn-age" data-age="junior">7 a 9 anos<br><small>Nível Intermediário</small></button>
-                    <button class="btn btn-age" data-age="senior">10+ anos<br><small>Nível Avançado</small></button>
-                </div>
-                <button id="btn-back-age" class="btn btn-secondary">⬅ Voltar</button>
-            </div>
-        </div>
-
-        <!-- TELA DE LOJA / SELEÇÃO DE PERSONAGENS -->
-        <div id="screen-chars" class="screen hidden">
-            <div class="screen-card text-center">
-                <h2>🎭 Loja de Personagens</h2>
-                <p class="shop-balance">Suas Moedas: <strong id="shop-coins">0</strong> 🪙</p>
-                <div class="chars-grid">
-                    <div class="char-card selected" data-char="🤖" data-price="0">
-                        <div class="char-icon">🤖</div>
-                        <strong>Kiko</strong>
-                        <small>Grátis</small>
+        <!-- TELA 1: SELEÇÃO DE PERSONAGEM (MORTAL KOMBAT / SUPER-HERÓIS) -->
+        <div id="screen-char-select" class="screen hidden">
+            <div class="screen-card text-center mk-card comic-frame">
+                <div class="comic-stamp">CHOOSE YOUR HERO</div>
+                <h2 class="mk-title">SELEÇÃO DE HEROIS</h2>
+                
+                <div class="mk-fighters-grid">
+                    <div class="mk-fighter selected" data-char="KIKO">
+                        <div class="mk-avatar-canvas-box">
+                            <canvas class="preview-canvas" data-hero="KIKO" width="70" height="70"></canvas>
+                        </div>
+                        <span class="mk-name">KIKO</span>
                     </div>
-                    <div class="char-card" data-char="🦊" data-price="50">
-                        <div class="char-icon">🦊</div>
-                        <strong>Foxie</strong>
-                        <small>50 🪙</small>
+                    <div class="mk-fighter" data-char="FOXIE">
+                        <div class="mk-avatar-canvas-box">
+                            <canvas class="preview-canvas" data-hero="FOXIE" width="70" height="70"></canvas>
+                        </div>
+                        <span class="mk-name">FOXIE</span>
                     </div>
-                    <div class="char-card" data-char="🦁" data-price="100">
-                        <div class="char-icon">🦁</div>
-                        <strong>Leo</strong>
-                        <small>100 🪙</small>
+                    <div class="mk-fighter" data-char="LEO">
+                        <div class="mk-avatar-canvas-box">
+                            <canvas class="preview-canvas" data-hero="LEO" width="70" height="70"></canvas>
+                        </div>
+                        <span class="mk-name">LEO</span>
                     </div>
-                    <div class="char-card" data-char="🦄" data-price="200">
-                        <div class="char-icon">🦄</div>
-                        <strong>Luna</strong>
-                        <small>200 🪙</small>
+                    <div class="mk-fighter" data-char="BATTY">
+                        <div class="mk-avatar-canvas-box">
+                            <canvas class="preview-canvas" data-hero="BATTY" width="70" height="70"></canvas>
+                        </div>
+                        <span class="mk-name">BATTY</span>
                     </div>
                 </div>
-                <button id="btn-back-chars" class="btn btn-secondary">⬅ Voltar</button>
+
+                <div class="screen-nav-buttons">
+                    <button id="btn-confirm-char" class="btn btn-primary comic-btn">CONFIRMAR</button>
+                    <button id="btn-back-char" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
+                </div>
             </div>
         </div>
 
-        <!-- TELA DE SELEÇÃO DE FASES -->
-        <div id="screen-levels" class="screen hidden">
-            <div class="screen-card">
-                <h2>🗺️ Seleção de Fases</h2>
-                <div id="levels-grid" class="levels-grid"></div>
-                <button id="btn-back-levels" class="btn btn-secondary">⬅ Voltar</button>
+        <!-- TELA 2: SELEÇÃO DE IDADE / ESCOLARIDADE -->
+        <div id="screen-age-select" class="screen hidden">
+            <div class="screen-card text-center comic-frame">
+                <div class="comic-stamp">NÍVEL DE DESAFIO</div>
+                <h2 class="mk-title">QUAL A SUA IDADE?</h2>
+                <p class="age-subtitle">As perguntas serão adaptadas ao seu nível escolar!</p>
+                
+                <div class="age-buttons-grid">
+                    <button class="btn btn-age comic-btn" data-age="infantil">
+                        <div class="age-badge-icon">INFANTIL</div>
+                        <div><strong>4 a 6 anos</strong><br><small>Perguntas Visuais e Cores</small></div>
+                    </button>
+                    <button class="btn btn-age comic-btn" data-age="junior">
+                        <div class="age-badge-icon">FUND. I</div>
+                        <div><strong>7 a 9 anos</strong><br><small>Matemática e Reciclagem</small></div>
+                    </button>
+                    <button class="btn btn-age comic-btn" data-age="senior">
+                        <div class="age-badge-icon">FUND. II</div>
+                        <div><strong>10+ anos</strong><br><small>Lógica e Sustentabilidade</small></div>
+                    </button>
+                </div>
+
+                <button id="btn-back-age" class="btn btn-secondary comic-btn margin-top-10">MENU PRINCIPAL</button>
             </div>
         </div>
 
-        <!-- TELA DE CAIXA SURPRESA (QUIZ) -->
+        <!-- TELA DE RESGATE (QUIZ) -->
         <div id="screen-quiz" class="screen hidden">
-            <div class="quiz-card text-center">
-                <div class="quiz-header">
-                    <span id="quiz-category" class="badge">📦 CAIXA SURPRESA</span>
-                    <button id="btn-read-question" class="btn-icon" title="Ouvir pergunta">🔊</button>
-                </div>
-                <h3 id="quiz-question">Carregando desafio...</h3>
+            <div class="quiz-card text-center comic-frame">
+                <div class="comic-stamp danger-stamp">SEGUNDA CHANCE</div>
+                <div class="timer-box">TEMPO: <span id="quiz-timer">30</span>s</div>
+                <h3 id="quiz-question">Pergunta de Resgate...</h3>
                 <div id="quiz-options" class="options-grid"></div>
+            </div>
+        </div>
+
+        <!-- TELA DE GAME OVER -->
+        <div id="screen-gameover" class="screen hidden">
+            <div class="screen-card text-center gameover-card comic-frame">
+                <h1 class="gameover-title">GAME OVER</h1>
+                <p>Você perdeu suas 3 vidas!</p>
+                <div class="score-summary">
+                    <p>Lixos Reciclados: <strong id="go-trash">0</strong></p>
+                    <p>Pontuação Final: <strong id="go-score">0</strong></p>
+                </div>
+                <div class="menu-buttons">
+                    <button id="btn-restart" class="btn btn-primary btn-large comic-btn">JOGAR NOVAMENTE</button>
+                    <button id="btn-go-home" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
+                </div>
             </div>
         </div>
 
         <!-- TELA DE PAUSA -->
         <div id="screen-pause" class="screen hidden">
-            <div class="screen-card text-center">
-                <h2>⏸️ Jogo Pausado</h2>
+            <div class="screen-card text-center comic-frame">
+                <h2>JOGO PAUSADO</h2>
                 <div class="menu-buttons">
-                    <button id="btn-resume" class="btn btn-primary">▶ Continuar</button>
-                    <button id="btn-restart" class="btn btn-secondary">🔄 Reiniciar Fase</button>
-                    <button id="btn-menu-pause" class="btn btn-secondary">🏠 Menu Principal</button>
+                    <button id="btn-resume" class="btn btn-primary comic-btn">CONTINUAR</button>
+                    <button id="btn-menu-pause" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
                 </div>
             </div>
         </div>
 
-        <!-- TELA DE CONCLUSÃO DE FASE -->
-        <div id="screen-reward" class="screen hidden">
-            <div class="screen-card text-center">
-                <h2>🎉 FASE CONCLUÍDA!</h2>
-                <div id="stars-container" class="stars-display">⭐⭐⭐</div>
-                <div class="reward-summary">
-                    <p>Lixos Reciclados: <strong id="reward-trash">0</strong> ♻️</p>
-                    <p>Moedas Coletadas: <strong id="reward-coins">0</strong> 🪙</p>
-                    <p>Pontuação Total: <strong id="reward-score">0</strong> 🎯</p>
-                </div>
-                <div class="menu-buttons">
-                    <button id="btn-next-level" class="btn btn-primary">PRÓXIMA FASE ➔</button>
-                    <button id="btn-menu-reward" class="btn btn-secondary">Menu Principal</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA FINAL DE VITÓRIA -->
-        <div id="screen-victory" class="screen hidden">
-            <div class="screen-card text-center victory-card">
-                <h1 class="victory-title">🏆 PARABÉNS! 🏆</h1>
-                <p class="victory-text">Você limpou todos os cenários e aprendeu super conhecimentos!</p>
-                <div class="trophy-icon">🌟✨👑</div>
-                <button id="btn-victory-restart" class="btn btn-primary btn-large">🎮 JOGAR NOVAMENTE</button>
-            </div>
-        </div>
-
-        <!-- TELA DE CONFIGURAÇÕES -->
+        <!-- CONFIGURAÇÕES -->
         <div id="screen-settings" class="screen hidden">
-            <div class="screen-card">
-                <h2>⚙️ Configurações</h2>
+            <div class="screen-card comic-frame">
+                <h2>CONFIGURAÇÕES</h2>
                 <div class="setting-item">
-                    <span>Efeitos Sonoros (SFX)</span>
+                    <span>Efeitos Sonoros</span>
                     <input type="checkbox" id="setting-sfx" checked>
                 </div>
                 <div class="setting-item">
                     <span>Narração em Voz Alta</span>
                     <input type="checkbox" id="setting-tts" checked>
                 </div>
-                <button id="btn-back-settings" class="btn btn-secondary">⬅ Voltar</button>
+                <button id="btn-back-settings" class="btn btn-secondary comic-btn">MENU PRINCIPAL</button>
             </div>
         </div>
     </div>
@@ -200,4 +193,4 @@
     <script src="js/player.js"></script>
     <script src="js/game.js"></script>
 </body>
-</html>   
+</html>
